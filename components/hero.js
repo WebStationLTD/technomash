@@ -88,7 +88,7 @@ export default function Hero() {
                     </div>
                   </div>
                   <h1 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-7xl font-display">
-                    "Lorem ipsum dolor sit amet"
+                    "Technomash"
                   </h1>
                   <p className="mt-8 text-4xl font-medium font-display">
                     Lorem ipsum
