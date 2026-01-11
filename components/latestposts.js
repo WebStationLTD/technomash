@@ -8,6 +8,7 @@ import Image from "next/image";
 export default function LatestPosts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   // Fetch latests posts from WordPress API on component mount
   useEffect(() => {
@@ -21,115 +22,183 @@ export default function LatestPosts() {
     fetchLatestPosts();
   }, []);
 
-  return (
-    <div className="bg-white">
-      <div className="mx-auto w-full py-0 sm:px-6 sm:py-0 lg:px-0">
-        <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:px-16">
-          <h3 className="text-4xl text-white">Последни новини</h3>
-          {/* Loader */}
-          {loading && (
-            <div className="flex justify-center mt-10">
-              <div className="w-12 h-12 border-4 border-gray-500 border-t-[#129160] rounded-full animate-spin"></div>
-            </div>
-          )}
+  // Placeholder news data for demo
+  const newsItems = [
+    {
+      id: 1,
+      title: "New Fabric opening",
+      image: "/menu-hero-image.jpg",
+    },
+    {
+      id: 2,
+      title: "Applied DNA Sciences, WestPoint Home Sign",
+      image: "/hero-image-desktop.jpg",
+    },
+  ];
 
-          {!loading && (
-            <div className="mx-auto mt-16 grid !max-w-[80%] grid-cols-1 gap-x-8 gap-y-20 lg:mx-auto lg:max-w-none lg:grid-cols-3">
-              {posts.length > 0 ? (
-                posts.map((post, index) => (
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    key={post.id}
-                    prefetch={true}
-                  >
-                    <article className="flex flex-col items-start justify-between">
-                      <div className="relative w-full">
-                        <Image
-                          width={400}
-                          height={225}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          quality={85}
-                          priority={index === 0}
-                          loading={index === 0 ? "eager" : "lazy"}
-                          alt={post.title.rendered || "Публикация"}
-                          src={
-                            post.yoast_head_json?.og_image?.[0]?.url ||
-                            "/placeholder.webp"
-                          }
-                          className="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
-                          format="webp"
-                        />
-                        <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                      </div>
-                      <div className="max-w-xl">
-                        <div className="mt-8 flex items-center gap-x-4 text-xs">
-                          <time dateTime={post.date} className="text-white">
-                            {new Date(post.date).toLocaleDateString()}
-                          </time>
-                        </div>
-                        <div className="group relative text-left">
-                          <h3 className="mt-3 text-lg/6 font-semibold text-white group-hover:text-gray-300">
-                            <span className="absolute inset-0" />
-                            {post.title.rendered}
-                          </h3>
-                          <p className="mt-5 line-clamp-3 text-sm/6 text-white">
-                            {post.content.rendered
-                              ? post.content.rendered
-                                  .replace(/<\/?[^>]+(>|$)/g, "")
-                                  .substring(0, 150) + "..."
-                              : "No description available"}
-                          </p>
-                        </div>
-                        <div className="relative mt-8 flex items-center gap-x-4">
-                          <Image
-                            width={40}
-                            height={40}
-                            quality={80}
-                            loading="lazy"
-                            alt="Автор"
-                            src={
-                              post.yoast_head_json?.schema?.["@graph"]?.find(
-                                (person) => person["@type"] === "Person"
-                              )?.image?.url || "/placeholder.webp"
-                            }
-                            className="size-10 rounded-full bg-gray-100"
-                            format="webp"
-                          />
-                          <div className="text-sm/6 text-left">
-                            <p className="font-semibold text-white">
-                              {post.yoast_head_json?.author || "Unknown Author"}
-                            </p>
-                            <p className="text-white">Author</p>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  </Link>
-                ))
-              ) : (
-                <p className="text-gray-600">No posts found.</p>
-              )}
+  return (
+    <div className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-0 lg:px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left Side - Text Content */}
+          <div className="space-y-6">
+            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+              News & Media Center
+            </h2>
+            <p className="text-base text-gray-600 leading-relaxed">
+              We are always open for any kind of cooperation and looking for new
+              promising projects
+            </p>
+            <div className="pt-4">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 text-[#db2925] hover:text-[#b82220] text-base font-semibold transition-colors"
+              >
+                VIEW ALL NEWS
+              </Link>
             </div>
-          )}
-          <svg
-            viewBox="0 0 1024 1024"
-            aria-hidden="true"
-            className="absolute -left-20 -bottom-140 -z-10 size-[64rem] -translate-x-1/2 [mask-image:radial-gradient(closest-side,white,transparent)]"
-          >
-            <circle
-              r={512}
-              cx={512}
-              cy={512}
-              fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
-              fillOpacity="0.7"
-            />
-            <defs>
-              <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                <stop stopColor="#129160" />
-                <stop offset={1} stopColor="#129160" />
-              </radialGradient>
-            </defs>
-          </svg>
+          </div>
+
+          {/* Right Side - News Carousel */}
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-lg">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+              >
+                {newsItems.map((item) => (
+                  <div key={item.id} className="flex-shrink-0 w-full">
+                    <div className="relative h-80 overflow-hidden group cursor-pointer">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <h3 className="text-xl font-semibold text-white">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Carousel Indicators */}
+            <div className="flex justify-center gap-2 mt-6">
+              {newsItems.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveSlide(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === activeSlide
+                      ? "w-8 bg-[#db2925]"
+                      : "w-2 bg-gray-300"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Office Contacts Section */}
+        <div className="mt-24 sm:mt-32 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left Side - Contact Info */}
+          <div className="bg-gray-50 p-12 rounded-lg space-y-8">
+            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+              Office Contacts
+            </h2>
+            <p className="text-base text-gray-600 leading-relaxed">
+              The textile, textile product, and apparel manufacturing industries
+              include establishments that process...
+            </p>
+
+            <div className="space-y-6">
+              {/* Address */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">
+                    350 Flatbush ave New York
+                  </p>
+                  <p className="text-sm text-gray-600">NY 10018 USA.</p>
+                </div>
+              </div>
+
+              {/* Phone Numbers */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">123-456-789</p>
+                  <p className="text-sm text-gray-600">234-432-456</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Map */}
+          <div className="relative h-96 lg:h-full min-h-[400px]">
+            <div className="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center">
+              {/* Dotted USA Map SVG */}
+              <svg
+                className="w-full h-full p-8"
+                viewBox="0 0 800 500"
+                fill="none"
+              >
+                {/* Simplified dotted map of USA */}
+                <g opacity="0.3">
+                  {Array.from({ length: 50 }).map((_, i) => {
+                    const x = 100 + (i % 20) * 30;
+                    const y = 100 + Math.floor(i / 20) * 30;
+                    return <circle key={i} cx={x} cy={y} r="2" fill="#000" />;
+                  })}
+                </g>
+                {/* Location markers */}
+                <circle cx="500" cy="150" r="8" fill="#db2925" />
+                <circle cx="300" cy="200" r="8" fill="#db2925" />
+                <circle cx="550" cy="180" r="8" fill="#db2925" />
+                <circle cx="600" cy="250" r="8" fill="#db2925" />
+                <circle cx="450" cy="280" r="8" fill="#db2925" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </div>

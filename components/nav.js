@@ -22,6 +22,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getServicesNav } from "../services/services";
 import { searchContent } from "../services/search";
+import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
@@ -41,10 +42,12 @@ export default function Navigation() {
       },
     ],
     pages: [
-      { name: "Начало", href: "/" },
-      { name: "Екип", href: "/team" },
-      { name: "Блог", href: "/blog" },
-      { name: "Контакти", href: "/contact" },
+      { name: "Home", href: "/" },
+      { name: "About Us", href: "/team" },
+      { name: "Services", href: "/services" },
+      { name: "Blog", href: "/blog" },
+      { name: "Shop", href: "/contact" },
+      { name: "Contacts", href: "/contact" },
     ],
   });
 
@@ -127,7 +130,49 @@ export default function Navigation() {
   }, []);
 
   return (
-    <div className="bg-white sticky shadow-md top-0 block w-full z-50">
+    <div className="bg-white sticky top-0 block w-full z-50">
+      {/* Top Header Bar - Full Width with Black Background */}
+      <div className="hidden lg:block bg-black">
+        <div className="w-full px-5">
+          <div className="flex items-center justify-between h-10 text-sm">
+            {/* Left - Contact Info */}
+            <div className="flex items-center gap-6 text-white">
+              <span>Office: 123-456-789</span>
+              <span>Factory: 123-456-789</span>
+            </div>
+
+            {/* Right - Social Icons and Search */}
+            <div className="flex items-center gap-4">
+              <a
+                href="#"
+                className="text-white hover:text-[#db2925] transition-colors"
+              >
+                <FaFacebookF className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="text-white hover:text-[#db2925] transition-colors"
+              >
+                <FaTwitter className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="text-white hover:text-[#db2925] transition-colors"
+              >
+                <FaYoutube className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="text-white hover:text-[#db2925] transition-colors"
+              >
+                <FaInstagram className="h-4 w-4" />
+              </a>
+              <MagnifyingGlassIcon className="h-5 w-5 text-white hover:text-[#db2925] cursor-pointer transition-colors" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -227,186 +272,94 @@ export default function Navigation() {
           </DialogPanel>
         </div>
       </Dialog>
-      <header className="relative bg-white">
-        <nav aria-label="Top" className="mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <div className="border-b border-gray-200">
-            <div className="flex items-center justify-between h-16 lg:h-16">
-              {/* Mobile menu button - запазваме мобилната версия непроменена */}
+      <header className="relative bg-white shadow-sm">
+        <nav aria-label="Top" className="w-full px-5">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo - Left (Mobile & Desktop) */}
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/technomash-logo.png"
+                  alt="Technomash Logo"
+                  width={280}
+                  height={93}
+                  className="h-20 w-auto"
+                  priority
+                />
+              </Link>
+            </div>
+
+            {/* Main Navigation - Center */}
+            <div className="hidden lg:flex lg:items-center lg:gap-8">
+              {navigation.pages.map((page) => (
+                <div key={page.name} className="relative group">
+                  <Link
+                    href={page.href}
+                    className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
+                    prefetch={true}
+                  >
+                    {page.name}
+                    {page.name === "About Us" || page.name === "Blog" ? (
+                      <ChevronDownIcon className="h-4 w-4" />
+                    ) : null}
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Side - Mobile Menu, Cart and Get a Quote Button */}
+            <div className="flex items-center gap-4">
+              {/* Shopping Cart Icon */}
+              <button className="relative p-2 text-gray-700 hover:text-[#db2925] hidden lg:block transition-colors">
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#db2925] text-white text-xs flex items-center justify-center">
+                  0
+                </span>
+              </button>
+
+              {/* Get a Quote Button */}
+              <Link
+                href="/contact"
+                className="hidden lg:inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
+              >
+                Get a Quote
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+
+              {/* Mobile menu button */}
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
+                className="relative rounded-md bg-white p-2 text-gray-700 lg:hidden"
               >
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon aria-hidden="true" className="size-6" />
               </button>
-
-              {/* Секция 1: Лого */}
-              <div className="w-1/4 lg:w-1/5 flex items-center justify-start">
-                <Link href="/" className="block">
-                  <span className="sr-only">NextLevel Theme</span>
-                  <Image
-                    width={180}
-                    height={40}
-                    alt=""
-                    src="/next-level-logo.png"
-                    className="w-auto transition-all duration-300 ease-in-out"
-                  />
-                </Link>
-              </div>
-
-              {/* Секция 2: Меню - центрирано */}
-              <div className="hidden lg:flex lg:items-center lg:justify-center lg:flex-1">
-                <PopoverGroup className="flex">
-                  <div className="flex space-x-8">
-                    {navigation.pages.map((page) => (
-                      <Link
-                        key={page.name}
-                        href={page.href}
-                        className="flex items-center font-medium text-gray-700 hover:text-gray-800 text-base"
-                        prefetch={true}
-                      >
-                        {page.name}
-                      </Link>
-                    ))}
-                    {navigation.categories.map((category) => (
-                      <Popover key={category.name} className="flex">
-                        {({ open, close }) => (
-                          <>
-                            <div className="relative flex">
-                              <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-[#129160] data-open:text-[#129160] cursor-pointer focus-visible:outline-none transition-all text-base">
-                                {category.name}
-                                <ChevronDownIcon
-                                  className={`ml-2 h-5 w-5 text-gray-500 transition-transform duration-200 ease-in-out ${
-                                    open ? "rotate-180" : "rotate-0"
-                                  }`}
-                                />
-                              </PopoverButton>
-                            </div>
-                            <PopoverPanel
-                              transition
-                              className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-                            >
-                              <div
-                                aria-hidden="true"
-                                className="absolute inset-0 top-1/2 bg-white shadow-sm"
-                              />
-                              <div className="relative bg-white">
-                                <div className="mx-auto max-w-7xl px-8">
-                                  {/* Loader */}
-                                  {loading && (
-                                    <div className="flex justify-center py-10">
-                                      <div className="w-12 h-12 border-4 border-gray-500 border-t-[#129160] rounded-full animate-spin"></div>
-                                    </div>
-                                  )}
-                                  {!loading && (
-                                    <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-6">
-                                      <div className="col-start-2">
-                                        <div className="group relative text-base sm:text-sm">
-                                          <Image
-                                            width={560}
-                                            height={560}
-                                            alt=""
-                                            src="/menu-hero-image.jpg"
-                                            className="w-full rounded-lg bg-gray-100 object-cover group-hover:opacity-75"
-                                          />
-                                        </div>
-                                      </div>
-                                      <ul className="text-lg divide-y divide-gray-100 start-1 row-start-1 grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-                                        {[
-                                          ...category.featured,
-                                          ...category.services,
-                                        ].map((service) => (
-                                          <li
-                                            key={service.id || service.name}
-                                            className="flex gap-x-4 py-1 items-center"
-                                          >
-                                            <Link
-                                              className="min-w-0 w-full flex"
-                                              href={service.href}
-                                              prefetch={true}
-                                              onClick={close}
-                                            >
-                                              <p className="text-lg font-semibold text-gray-900 transition-colors duration-300 hover:text-[#129160]">
-                                                {service.name}
-                                              </p>
-                                            </Link>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </PopoverPanel>
-                          </>
-                        )}
-                      </Popover>
-                    ))}
-                  </div>
-                </PopoverGroup>
-              </div>
-
-              {/* Секция 3: Търсачка */}
-              <div
-                ref={searchRef}
-                className="flex justify-end w-40 sm:w-44 lg:w-1/6"
-              >
-                <div className="relative w-full lg:w-72">
-                  <input
-                    type="text"
-                    placeholder="Търсене..."
-                    value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery(e.target.value);
-                      setShowResults(true);
-                    }}
-                    onFocus={() => {
-                      if (searchQuery.length >= 3) {
-                        setShowResults(true);
-                      }
-                    }}
-                    className="block w-full px-3 pr-10 text-gray-900 placeholder:text-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#129160] py-1 text-sm sm:text-base lg:text-base"
-                  />
-                  <MagnifyingGlassIcon className="absolute right-2 top-1/2 text-gray-500 -translate-y-1/2 h-5 w-5" />
-                </div>
-                {showResults && (
-                  <div className="absolute right-0 w-44 sm:w-48 lg:w-72 mt-2 bg-white shadow-lg rounded-md max-h-48 sm:max-h-56 lg:max-h-60 overflow-y-auto border border-gray-200">
-                    {isSearching ? (
-                      <div className="p-2 text-gray-500 text-sm text-center">
-                        Зареждане...
-                      </div>
-                    ) : searchResults.length > 0 ? (
-                      <ul className="divide-y divide-gray-200">
-                        {searchResults.map((result) => (
-                          <li
-                            key={result.id}
-                            className="p-1 sm:p-2 hover:bg-gray-100"
-                            onClick={() => {
-                              setSearchQuery("");
-                              setSearchResults([]);
-                              setShowResults(false);
-                            }}
-                          >
-                            <Link
-                              href={`/${result.type}/${result.slug}`}
-                              className="block w-full h-full p-1 sm:p-2 text-gray-900 hover:text-[#129160]"
-                              prefetch={true}
-                            >
-                              {result.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <div className="p-2 text-gray-500 text-sm text-center">
-                        Няма намерени резултати
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </nav>

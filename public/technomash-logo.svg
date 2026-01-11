@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 65" fill="none">
+  <!-- Diamond logo - EXACT copy from original -->
+  <g transform="translate(5, 5)">
+    <!-- Back/bottom large red diamond -->
+    <path d="M18 28 L35 18 L52 28 L35 38 Z" fill="#C93030"/>
+    
+    <!-- Left top red diamond -->
+    <path d="M18 10 L35 0 L52 10 L35 20 Z" fill="#DB3B3B"/>
+    
+    <!-- Right center red diamond -->
+    <path d="M35 20 L52 10 L69 20 L52 30 Z" fill="#E04545"/>
+    
+    <!-- Front white/outlined diamond -->
+    <path d="M52 30 L69 20 L86 30 L69 40 Z" fill="#FFFFFF" stroke="#DB3B3B" stroke-width="2.5"/>
+  </g>
+  
+  <!-- ТЕХНОМАШ text - bold -->
+  <text x="100" y="32" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold" letter-spacing="1.5" fill="#1A1A1A">ТЕХНОМАШ</text>
+  
+  <!-- БЪЛГАРСКА ИНДУСТРИАЛНА ГРУПА text -->
+  <text x="100" y="52" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" letter-spacing="0.3" fill="#1A1A1A">БЪЛГАРСКА ИНДУСТРИАЛНА ГРУПА</text>
+</svg>
