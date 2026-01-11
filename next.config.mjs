@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "nextlevel.admin-panels.com",
+        hostname: "technomash.admin-panels.com",
       },
       {
         protocol: "https",
