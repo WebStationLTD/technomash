@@ -32,7 +32,7 @@ export function CriticalCSS() {
             }
           }
           
-          @media (min-width:641px) {
+          @media (min-width:1024px) {
             #hero-desktop-lcp {
               display: block !important;
               visibility: visible !important;

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { notFound } from "next/navigation";
+import ServiceContactForm from "../../../components/ServiceContactForm";
 
 // Dynamic loading of content component
 const PageContent = dynamic(() => import("../../../components/PageContent"), {
@@ -184,7 +185,7 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
         <div className="bg-white py-12 sm:py-12">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 space-y-12">
             <Suspense
               fallback={
                 <div className="animate-pulse h-96 bg-gray-100 rounded-md"></div>
@@ -192,6 +193,10 @@ export default async function ServicePage({ params }) {
             >
               <PageContent content={page.content?.rendered || ""} />
             </Suspense>
+            <ServiceContactForm
+              formId={585}
+              serviceName={page.title?.rendered || slug}
+            />
           </div>
         </div>
       </>
