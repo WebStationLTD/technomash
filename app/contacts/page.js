@@ -20,7 +20,7 @@ export default async function ContactsPage() {
   const contactInfo = {
     address: "София, България",
     phone: "+359 2 123 4567",
-    email: "info@technomash-bg.com",
+    email: "office@technomash-bg.com",
     officeHours: "Понеделник - Петък: 09:00 - 18:00",
   };
 

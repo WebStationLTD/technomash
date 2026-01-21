@@ -185,8 +185,8 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-10 text-sm">
             {/* Left - Contact Info */}
             <div className="flex items-center gap-6 text-white">
-              <span>Office: 123-456-789</span>
-              <span>Factory: 123-456-789</span>
+              <span>Тел.: 0457 640 16</span>
+              <span>GSM: +359 884 777 595, +359 888 0011 99</span>
             </div>
 
             {/* Right - Social Icons and Search */}
@@ -466,34 +466,14 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Right Side - Mobile Menu, Cart and Get a Quote Button */}
+            {/* Right Side - Mobile Menu and CTA Button */}
             <div className="flex items-center gap-4">
-              {/* Shopping Cart Icon */}
-              <button className="relative p-2 text-gray-700 hover:text-[#db2925] hidden lg:block transition-colors">
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#db2925] text-white text-xs flex items-center justify-center">
-                  0
-                </span>
-              </button>
-
-              {/* Get a Quote Button */}
+              {/* CTA Button */}
               <Link
                 href="/contacts"
                 className="hidden lg:inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
               >
-                Get a Quote
+                Запитване
                 <svg
                   className="h-4 w-4"
                   fill="none"

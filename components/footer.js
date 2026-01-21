@@ -109,10 +109,10 @@ export default function Footer() {
               </svg>
             </Link>
             <Link
-              href="/contact"
+              href="/contacts"
               className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
             >
-              Get a Quote
+              Запитване
               <svg
                 className="h-4 w-4"
                 fill="none"
@@ -232,12 +232,22 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section - Copyright and Social */}
-        <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-600">
-            © {year} Factory, Plant, Industrial Business & Manufacturing
-            WordPress Theme
-          </p>
-          <div className="flex gap-4">
+          <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-600 text-center md:text-left">
+              © {year} Technomash. Всички права запазени.{" "}
+              <span className="inline-block">
+                Powered by{" "}
+                <a
+                  href="https://webstation.bg/profesionalna-seo-optimizatsia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold hover:text-[#db2925] transition-colors"
+                >
+                  WebStation™
+                </a>
+              </span>
+            </p>
+            <div className="flex gap-4">
             {navigation.social.map((item) => (
               <a
                 key={item.name}
