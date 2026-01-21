@@ -15,7 +15,7 @@ const PageContent = dynamic(() => import("../../../components/PageContent"), {
 // ISR revalidation every hour
 export const revalidate = 3600;
 
-// Service page IDs mapping
+// Service page IDs mapping (for pages that are also services)
 const servicePagesMap = {
   "izgrazhdane-fotovoltaichni-tsentrali": 417,
   "izgrazhdane-fotovoltaiichni-tsentrali": 417, // Alternative spelling
@@ -26,90 +26,96 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const pageId = servicePagesMap[slug];
 
-  if (!pageId) {
-    // Try to get by slug from WordPress
-    try {
-      const response = await fetch(
-        `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,title`
-      );
-      if (response.ok) {
-        const pages = await response.json();
-        if (pages.length > 0) {
-          const page = pages[0];
-          const meta = page.yoast_head_json || {};
-          return {
-            title: meta.title || page.title?.rendered || "Услуга - Technomash",
-            description: meta.description || "Услуга - Technomash",
-          };
-        }
+  // Try to get service from WordPress REST API (CPT: service)
+  try {
+    const response = await fetch(
+      `https://technomash.admin-panels.com/wp-json/wp/v2/services?slug=${slug}&_fields=id,slug,yoast_head_json,title,content`,
+      {
+        next: { revalidate: 3600 },
       }
-    } catch (error) {
-      console.error("Error fetching page:", error);
+    );
+    if (response.ok) {
+      const services = await response.json();
+      if (services.length > 0) {
+        const service = services[0];
+        const meta = service.yoast_head_json || {};
+        const ogImage =
+          meta.og_image && meta.og_image.length > 0 ? meta.og_image[0].url : "";
+
+        return {
+          title: meta.title || service.title?.rendered || "Услуга - Technomash",
+          description: meta.description || "Услуга - Technomash",
+          keywords: meta.keywords || ["услуга", "technomash"],
+          openGraph: {
+            title: meta.og_title || service.title?.rendered || "Услуга - Technomash",
+            description: meta.og_description || "Услуга - Technomash",
+            images: ogImage
+              ? [
+                  {
+                    url: ogImage,
+                    width: 1200,
+                    height: 630,
+                    alt: service.title?.rendered || "Услуга",
+                  },
+                ]
+              : [],
+            type: "article",
+          },
+          alternates: {
+            canonical: meta.canonical || `/uslugi/${slug}`,
+          },
+        };
+      }
     }
-    return {
-      title: "Услуга - Technomash",
-    };
+  } catch (error) {
+    console.error("Error fetching service:", error);
   }
 
-  const page = await getPageById(pageId);
-
-  if (!page) {
-    return {
-      title: "Услуга - Technomash",
-    };
+  // Fallback to page by ID if service not found
+  if (pageId) {
+    const page = await getPageById(pageId);
+    if (page) {
+      const meta = page.yoast_head_json || {};
+      return {
+        title: meta.title || page.title?.rendered || "Услуга - Technomash",
+        description: meta.description || "Услуга - Technomash",
+      };
+    }
   }
-
-  const meta = page.yoast_head_json || {};
-  const ogImage =
-    meta.og_image && meta.og_image.length > 0 ? meta.og_image[0].url : "";
 
   return {
-    title: meta.title || page.title?.rendered || "Услуга - Technomash",
-    description: meta.description || "Услуга - Technomash",
-    keywords: meta.keywords || ["услуга", "technomash"],
-    openGraph: {
-      title: meta.og_title || page.title?.rendered || "Услуга - Technomash",
-      description: meta.og_description || "Услуга - Technomash",
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-              width: 1200,
-              height: 630,
-              alt: page.title?.rendered || "Услуга",
-            },
-          ]
-        : [],
-      type: "article",
-    },
-    alternates: {
-      canonical: meta.canonical || `/services/${slug}`,
-    },
+    title: "Услуга - Technomash",
   };
 }
 
 export default async function ServicePage({ params }) {
   try {
     const { slug } = await params;
-    let pageId = servicePagesMap[slug];
     let page = null;
 
-    if (pageId) {
-      page = await getPageById(pageId);
-    } else {
-      // Try to get by slug from WordPress
-      try {
-        const response = await fetch(
-          `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,date,title,content`
-        );
-        if (response.ok) {
-          const pages = await response.json();
-          if (pages.length > 0) {
-            page = pages[0];
-          }
+    // Try to get service from WordPress REST API (CPT: service)
+    try {
+      const response = await fetch(
+        `https://technomash.admin-panels.com/wp-json/wp/v2/services?slug=${slug}&_fields=id,slug,yoast_head_json,date,title,content`,
+        {
+          next: { revalidate: 3600 },
         }
-      } catch (error) {
-        console.error("Error fetching page:", error);
+      );
+      if (response.ok) {
+        const services = await response.json();
+        if (services.length > 0) {
+          page = services[0];
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching service:", error);
+    }
+
+    // Fallback to page by ID if service not found
+    if (!page) {
+      const pageId = servicePagesMap[slug];
+      if (pageId) {
+        page = await getPageById(pageId);
       }
     }
 
@@ -130,7 +136,7 @@ export default async function ServicePage({ params }) {
         page.content?.rendered
           ?.replace(/<[^>]+>/g, "")
           .substring(0, 200) + "..." || "",
-      url: meta.canonical || `https://technomash-bg.com/services/${slug}`,
+      url: meta.canonical || `https://technomash-bg.com/uslugi/${slug}`,
       image: ogImage || "",
       provider: {
         "@type": "Organization",

@@ -1,11 +1,11 @@
-import { getPageById } from "../../../services/pages";
+import { getPageById } from "../../../../services/pages";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 
 // Dynamic loading of content component
-const PageContent = dynamic(() => import("../../../components/PageContent"), {
+const PageContent = dynamic(() => import("../../../../components/PageContent"), {
   ssr: true,
   loading: () => (
     <div className="animate-pulse h-96 bg-gray-100 rounded-md"></div>
@@ -15,39 +15,36 @@ const PageContent = dynamic(() => import("../../../components/PageContent"), {
 // ISR revalidation every hour
 export const revalidate = 3600;
 
-// Service page IDs mapping
-const servicePagesMap = {
-  "izgrazhdane-fotovoltaichni-tsentrali": 417,
-  "izgrazhdane-fotovoltaiichni-tsentrali": 417, // Alternative spelling
-  "izgrazhdane-na-poststantsii": 408,
+// History page IDs mapping
+const historyPagesMap = {
+  "mobile-concrete-plants": 561,
+  "modular-concrete-plants": 563,
+  "screening-mobile-installations": 565,
+  "asphalt-mixing-plants": 567,
+  "feeding-groups": 569,
+  "control-cabins": 571,
+  "generators": 573,
+  "electronic-scales": 575,
+};
+
+const historyPagesTitles = {
+  "mobile-concrete-plants": "Мобилни бетонови възли",
+  "modular-concrete-plants": "Модулни бетонови възли",
+  "screening-mobile-installations": "Пресевни и мобилни инсталации",
+  "asphalt-mixing-plants": "Асфалто-смесителни инсталации",
+  "feeding-groups": "Зареждащи групи",
+  "control-cabins": "Контролни кабини",
+  "generators": "Генератори за електричество",
+  "electronic-scales": "Електронни кантари",
 };
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const pageId = servicePagesMap[slug];
+  const pageId = historyPagesMap[slug];
 
   if (!pageId) {
-    // Try to get by slug from WordPress
-    try {
-      const response = await fetch(
-        `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,title`
-      );
-      if (response.ok) {
-        const pages = await response.json();
-        if (pages.length > 0) {
-          const page = pages[0];
-          const meta = page.yoast_head_json || {};
-          return {
-            title: meta.title || page.title?.rendered || "Услуга - Technomash",
-            description: meta.description || "Услуга - Technomash",
-          };
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching page:", error);
-    }
     return {
-      title: "Услуга - Technomash",
+      title: "Страница не намерена - Technomash",
     };
   }
 
@@ -55,7 +52,7 @@ export async function generateMetadata({ params }) {
 
   if (!page) {
     return {
-      title: "Услуга - Technomash",
+      title: "Страница не намерена - Technomash",
     };
   }
 
@@ -64,54 +61,40 @@ export async function generateMetadata({ params }) {
     meta.og_image && meta.og_image.length > 0 ? meta.og_image[0].url : "";
 
   return {
-    title: meta.title || page.title?.rendered || "Услуга - Technomash",
-    description: meta.description || "Услуга - Technomash",
-    keywords: meta.keywords || ["услуга", "technomash"],
+    title: meta.title || page.title?.rendered || historyPagesTitles[slug] || "История - Technomash",
+    description: meta.description || "История на Technomash",
+    keywords: meta.keywords || ["история", "technomash"],
     openGraph: {
-      title: meta.og_title || page.title?.rendered || "Услуга - Technomash",
-      description: meta.og_description || "Услуга - Technomash",
+      title: meta.og_title || page.title?.rendered || historyPagesTitles[slug] || "История - Technomash",
+      description: meta.og_description || "История на Technomash",
       images: ogImage
         ? [
             {
               url: ogImage,
               width: 1200,
               height: 630,
-              alt: page.title?.rendered || "Услуга",
+              alt: page.title?.rendered || historyPagesTitles[slug] || "История",
             },
           ]
         : [],
       type: "article",
     },
     alternates: {
-      canonical: meta.canonical || `/services/${slug}`,
+      canonical: meta.canonical || `/about-us/history/${slug}`,
     },
   };
 }
 
-export default async function ServicePage({ params }) {
+export default async function HistoryDetailPage({ params }) {
   try {
     const { slug } = await params;
-    let pageId = servicePagesMap[slug];
-    let page = null;
+    const pageId = historyPagesMap[slug];
 
-    if (pageId) {
-      page = await getPageById(pageId);
-    } else {
-      // Try to get by slug from WordPress
-      try {
-        const response = await fetch(
-          `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,date,title,content`
-        );
-        if (response.ok) {
-          const pages = await response.json();
-          if (pages.length > 0) {
-            page = pages[0];
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching page:", error);
-      }
+    if (!pageId) {
+      notFound();
     }
+
+    const page = await getPageById(pageId);
 
     if (!page) {
       notFound();
@@ -124,25 +107,20 @@ export default async function ServicePage({ params }) {
     // Prepare structured data for Schema.org
     const pageSchemaData = {
       "@context": "https://schema.org",
-      "@type": "Service",
-      name: page.title?.rendered || "Услуга",
+      "@type": "Article",
+      name: page.title?.rendered || historyPagesTitles[slug] || "История",
       description:
         page.content?.rendered
           ?.replace(/<[^>]+>/g, "")
           .substring(0, 200) + "..." || "",
-      url: meta.canonical || `https://technomash-bg.com/services/${slug}`,
+      url: meta.canonical || `https://technomash-bg.com/about-us/history/${slug}`,
       image: ogImage || "",
-      provider: {
-        "@type": "Organization",
-        name: "Technomash",
-        url: "https://technomash-bg.com",
-      },
     };
 
     return (
       <>
         <Script
-          id="service-schema"
+          id="history-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(pageSchemaData),
@@ -153,7 +131,7 @@ export default async function ServicePage({ params }) {
           <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
             <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
               <h1 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
-                {page.title?.rendered || "Услуга"}
+                {page.title?.rendered || historyPagesTitles[slug] || "История"}
               </h1>
               <svg
                 viewBox="0 0 1024 1024"

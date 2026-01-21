@@ -3,30 +3,61 @@ import Link from "next/link";
 import { getMembers } from "../../services/members";
 
 export const metadata = {
-  title: "Екип - NextLevel Theme",
+  title: "Екип - Technomash",
   description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Запознайте се с нашия професионален екип от експерти, които работят за успеха на вашите проекти.",
 };
 
 export default async function Team() {
-  const members = await getMembers();
-
-  if (!members || members.length === 0) {
-    throw new Error("Team members not found");
+  let members = [];
+  
+  try {
+    members = await getMembers();
+  } catch (error) {
+    console.error("Error fetching team members:", error);
   }
+
+  // Example team members if none found
+  const exampleMembers = [
+    {
+      id: 1,
+      name: "Иван Петров",
+      position: "Главен изпълнителен директор",
+      description: "Иван Петров е с над 20 години опит в строителната индустрия. Той ръководи екипа ни с видение и страст към иновациите.",
+      profilepicture: "/placeholder.webp",
+      slug: "ivan-petrov",
+    },
+    {
+      id: 2,
+      name: "Мария Георгиева",
+      position: "Технически директор",
+      description: "Мария Георгиева е експерт в областта на производствените процеси и технологичните решения. Тя осигурява високо качество на всички проекти.",
+      profilepicture: "/placeholder.webp",
+      slug: "maria-georgieva",
+    },
+    {
+      id: 3,
+      name: "Петър Стоянов",
+      position: "Директор по продажбите",
+      description: "Петър Стоянов има дългогодишен опит в управлението на клиентски отношения и развитието на бизнеса. Той е ключовата фигура в нашия успех.",
+      profilepicture: "/placeholder.webp",
+      slug: "petar-stoyanov",
+    },
+  ];
+
+  const displayMembers = members.length > 0 ? members : exampleMembers;
 
   return (
     <>
       <div className="bg-white">
-        <div className="mx-auto max-w-10/10 py-0 sm:py-0 lg:px-0">
+        <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
             <div className="mx-auto max-w-2xl text-center">
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Lorem ipsum dolor sit amet
+                Нашият екип
               </h1>
-              <p className="mt-6  text-lg/8 text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <p className="mt-6 text-lg/8 text-white">
+                Запознайте се с професионалния екип от експерти, които работят за успеха на вашите проекти.
               </p>
             </div>
             <svg
@@ -43,8 +74,8 @@ export default async function Team() {
               />
               <defs>
                 <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                  <stop stopColor="#129160" />
-                  <stop offset={1} stopColor="#129160" />
+                  <stop stopColor="#db2925" />
+                  <stop offset={1} stopColor="#db2925" />
                 </radialGradient>
               </defs>
             </svg>
@@ -58,21 +89,17 @@ export default async function Team() {
               За екипа
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Нашият екип се състои от опитни професионалисти, които споделят обща страст към иновациите и качеството. Работим заедно, за да осигурим най-добрите решения за нашите клиенти.
             </p>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
-              ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua.
+              Всеки член на екипа принася уникални умения и опит, което прави Technomash лидер в индустрията. Ние вярваме в сътрудничеството, професионализма и постоянния стремеж към усъвършенстване.
             </p>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Lorem ipsum dolor sit amet!
+              Присъединете се към нас в пътуването към успеха!
             </p>
           </div>
           <ul role="list" className="divide-y divide-gray-200 xl:col-span-3">
-            {members.map((member) => (
+            {displayMembers.map((member) => (
               <li
                 key={member.id}
                 className="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row"
@@ -104,8 +131,8 @@ export default async function Team() {
                       }}
                     />
                   </Link>
-                  <ul role="list" className="mt-6 flex gap-x-6">
-                    {member.linkedin && member.linkedin.url && (
+                  {member.linkedin && member.linkedin.url && (
+                    <ul role="list" className="mt-6 flex gap-x-6">
                       <li>
                         <Link
                           href={member.linkedin.url}
@@ -127,8 +154,8 @@ export default async function Team() {
                           </svg>
                         </Link>
                       </li>
-                    )}
-                  </ul>
+                    </ul>
+                  )}
                 </div>
               </li>
             ))}

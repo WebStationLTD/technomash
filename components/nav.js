@@ -26,7 +26,9 @@ import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // Navigation data is static – no loading state needed
+  const [loading, setLoading] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -37,64 +39,110 @@ export default function Navigation() {
       {
         id: "categories",
         name: "Услуги",
-        featured: [],
+        // Static services for the mega menu
+        featured: [
+          {
+            name: "Изграждане фотоволтаични централи",
+            href: "/uslugi/izgrazhdane-fotovoltaichni-tsentrali",
+            imageSrc: "/placeholder.webp",
+            imageAlt: "Изграждане фотоволтаични централи",
+          },
+          {
+            name: "Изграждане на постстанции",
+            href: "/services/izgrazhdane-na-poststantsii",
+            imageSrc: "/placeholder.webp",
+            imageAlt: "Изграждане на постстанции",
+          },
+        ],
         services: [],
       },
     ],
     pages: [
-      { name: "Home", href: "/" },
-      { name: "About Us", href: "/team" },
-      { name: "Services", href: "/services" },
-      { name: "Blog", href: "/blog" },
-      { name: "Shop", href: "/contact" },
-      { name: "Contacts", href: "/contact" },
+      { name: "Начало", href: "/" },
+      {
+        name: "За нас",
+        href: "/about-us",
+        hasDropdown: true,
+        children: [
+          {
+            name: "История",
+            href: "/about-us/history",
+            hasSubmenu: true,
+            submenuItems: [
+              {
+                name: "Мобилни бетонови възли",
+                href: "/about-us/history/mobile-concrete-plants",
+              },
+              {
+                name: "Модулни бетонови възли",
+                href: "/about-us/history/modular-concrete-plants",
+              },
+              {
+                name: "Пресевни и мобилни инсталации",
+                href: "/about-us/history/screening-mobile-installations",
+              },
+              {
+                name: "Асфалто-смесителни инсталации",
+                href: "/about-us/history/asphalt-mixing-plants",
+              },
+              {
+                name: "Зареждащи групи",
+                href: "/about-us/history/feeding-groups",
+              },
+              {
+                name: "Контролни кабини",
+                href: "/about-us/history/control-cabins",
+              },
+              {
+                name: "Генератори за електричество",
+                href: "/about-us/history/generators",
+              },
+              {
+                name: "Електронни кантари",
+                href: "/about-us/history/electronic-scales",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        name: "Услуги",
+        href: "#",
+        hasDropdown: true,
+        children: [
+          {
+            name: "Изграждане фотоволтаични централи",
+            href: "/uslugi/izgrazhdane-fotovoltaichni-tsentrali",
+          },
+          {
+            name: "Изграждане на постстанции",
+            href: "/uslugi/izgrazhdane-na-poststantsii",
+          },
+        ],
+      },
+      { name: "Екип", href: "/team" },
+      { name: "Контакти", href: "/contacts" },
     ],
   });
 
+  // NOTE: Old dynamic fetching of menu items from WordPress is kept commented for reference.
+  // It is no longer needed because the navigation is now static and simple.
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const services = await getServicesNav();
-
-        if (!services || !Array.isArray(services) || services.length === 0) {
-          console.warn("No services found from API");
-          return;
-        }
-
-        const featured = services.slice(0, 2);
-        const remainingServices = services.slice(2);
-
-        setNavigation((prev) => ({
-          ...prev,
-          categories: [
-            {
-              id: "categories",
-              name: "Услуги",
-              featured: featured.map((service) => ({
-                name: service.title.rendered,
-                href: `/services/${service.slug}`,
-                imageSrc:
-                  service.yoast_head_json?.og_image?.[0]?.url ||
-                  "/placeholder.webp",
-                imageAlt: service.title.rendered,
-              })),
-              services: remainingServices.map((service) => ({
-                id: service.id,
-                name: service.title.rendered,
-                href: `/services/${service.slug}`,
-              })),
-            },
-          ],
-        }));
+        // Dynamic fetching for menu items was here.
         setLoading(false);
       } catch (error) {
         console.error("Error fetching navigation data:", error);
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
+  */
 
   useEffect(() => {
     if (searchQuery.length < 3) {
@@ -206,17 +254,58 @@ export default function Navigation() {
             </div>
             {/* Links */}
             <TabGroup className="mt-2">
-              <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+              <div className="space-y-4 border-t border-gray-200 px-4 py-6">
                 {navigation.pages.map((page) => (
                   <div key={page.name} className="flow-root">
-                    <Link
-                      href={page.href}
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                      onClick={() => setOpen(false)}
-                      prefetch={true}
-                    >
-                      {page.name}
-                    </Link>
+                    {page.hasDropdown && (page.children?.length > 0 || page.name === "Услуги") ? (
+                      <div>
+                        <div className="-m-2 block p-2 font-semibold text-gray-900 text-base">
+                          {page.name}
+                        </div>
+                        <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
+                          {page.children && page.children.length > 0 ? (
+                            page.children.map((child) => (
+                              <div key={child.name}>
+                                <Link
+                                  href={child.href}
+                                  className="-m-2 block p-2 text-sm text-gray-600 hover:text-gray-900 hover:font-medium transition-colors"
+                                  onClick={() => setOpen(false)}
+                                  prefetch={true}
+                                >
+                                  {child.name}
+                                </Link>
+                                {child.hasSubmenu && child.submenuItems && child.submenuItems.length > 0 && (
+                                  <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
+                                    {child.submenuItems.map((subItem) => (
+                                      <Link
+                                        key={subItem.name}
+                                        href={subItem.href}
+                                        className="-m-2 block p-2 text-xs text-gray-500 hover:text-gray-700 hover:font-medium transition-colors"
+                                        onClick={() => setOpen(false)}
+                                        prefetch={true}
+                                      >
+                                        {subItem.name}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))
+                            ) : (
+                              <div className="px-2 py-2 text-gray-500 text-sm">Няма налични опции</div>
+                            )}
+                        </div>
+                      </div>
+                    ) : (
+                      <Link
+                        href={page.href}
+                        className="-m-2 block p-2 font-semibold text-gray-900 text-base hover:text-[#db2925] transition-colors"
+                        onClick={() => setOpen(false)}
+                        prefetch={true}
+                      >
+                        {page.name}
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>
@@ -225,7 +314,7 @@ export default function Navigation() {
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-xl font-bold text-center text-gray-900 hover:text-[#129160] data-headlessui-state-selected:border-[#129160] data-headlessui-state-selected:text-[#129160]"
+                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-xl font-bold text-center text-gray-900 hover:text-[#db2925] data-headlessui-state-selected:border-[#db2925] data-headlessui-state-selected:text-[#db2925]"
                     >
                       {category.name}
                     </Tab>
@@ -235,7 +324,7 @@ export default function Navigation() {
               {/* Loader */}
               {loading && (
                 <div className="flex justify-center py-10">
-                  <div className="w-12 h-12 border-4 border-gray-500 border-t-[#129160] rounded-full animate-spin"></div>
+                  <div className="w-12 h-12 border-4 border-gray-500 border-t-[#db2925] rounded-full animate-spin"></div>
                 </div>
               )}
               {!loading && (
@@ -293,16 +382,86 @@ export default function Navigation() {
             <div className="hidden lg:flex lg:items-center lg:gap-8">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="relative group">
-                  <Link
-                    href={page.href}
-                    className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
-                    prefetch={true}
-                  >
-                    {page.name}
-                    {page.name === "About Us" || page.name === "Blog" ? (
-                      <ChevronDownIcon className="h-4 w-4" />
-                    ) : null}
-                  </Link>
+                  {page.hasDropdown && (page.children?.length > 0 || page.name === "Услуги") ? (
+                    <>
+                      <button
+                        type="button"
+                        className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
+                      >
+                        {page.name}
+                        <ChevronDownIcon className="h-4 w-4" />
+                      </button>
+                      <div className="absolute left-1/2 z-10 mt-0 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <div className="w-64 flex-auto rounded-lg bg-white text-sm leading-6 shadow-xl ring-1 ring-gray-900/5">
+                          <div className="p-2">
+                            {page.children && page.children.length > 0 ? (
+                              page.children.map((child) => {
+                                if (
+                                  child.hasSubmenu &&
+                                  child.submenuItems &&
+                                  child.submenuItems.length > 0
+                                ) {
+                                  return (
+                                    <div
+                                      key={child.name}
+                                      className="relative"
+                                      onMouseEnter={() => setHistoryOpen(true)}
+                                      onMouseLeave={() => setHistoryOpen(false)}
+                                    >
+                                      <button
+                                        type="button"
+                                        className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                      >
+                                        <span className="flex-1">{child.name}</span>
+                                        <ChevronDownIcon className="h-4 w-4 ml-2 flex-shrink-0" />
+                                      </button>
+                                      {historyOpen && (
+                                        <div className="absolute left-full top-0 ml-0 w-64 transition-all duration-200 z-20 rounded-lg bg-white shadow-xl ring-1 ring-gray-900/5">
+                                          <div className="p-2">
+                                            {child.submenuItems.map((subItem) => (
+                                              <Link
+                                                key={subItem.name}
+                                                href={subItem.href}
+                                                className="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                                prefetch={true}
+                                              >
+                                                {subItem.name}
+                                              </Link>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                }
+
+                                return (
+                                  <Link
+                                    key={child.name}
+                                    href={child.href}
+                                    className="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                    prefetch={true}
+                                  >
+                                    {child.name}
+                                  </Link>
+                                );
+                              })
+                            ) : (
+                              <div className="px-3 py-2 text-gray-500 text-sm">Няма налични опции</div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={page.href}
+                      className="text-sm font-medium text-gray-700 hover:text-gray-900 flex items-center gap-1"
+                      prefetch={true}
+                    >
+                      {page.name}
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>
@@ -331,7 +490,7 @@ export default function Navigation() {
 
               {/* Get a Quote Button */}
               <Link
-                href="/contact"
+                href="/contacts"
                 className="hidden lg:inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
               >
                 Get a Quote

@@ -14,8 +14,8 @@ export const getMembers = cache(async () => {
       }
     );
 
+    // If API returns null or invalid data, return empty array silently
     if (!fetchedMembers || !Array.isArray(fetchedMembers)) {
-      console.error("API returned invalid members data:", fetchedMembers);
       return [];
     }
 
@@ -35,7 +35,7 @@ export const getMembers = cache(async () => {
       profilepicture: member.acf?.profilepicture || "/placeholder.webp",
     }));
   } catch (error) {
-    console.error("Error fetching members:", error);
+    // Silently return empty array if there's an error
     return [];
   }
 });
