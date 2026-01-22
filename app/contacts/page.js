@@ -20,7 +20,7 @@ export default async function ContactsPage() {
   // Contact information - hardcoded as requested
   const contactInfo = {
     address: "8900 НОВА ЗАГОРА, П.К. 30, ИНДУСТРИАЛНА ЗОНА",
-    phone: "+359 2 123 4567",
+    phone: "+359 884 777 595",
     email: "office@technomash-bg.com",
     officeHours: "Понеделник - Петък: 09:00 - 18:00",
   };
@@ -150,7 +150,7 @@ export default async function ContactsPage() {
               type: "Technomash",
               address: "8900 НОВА ЗАГОРА, П.К. 30",
               addressDetails: "ИНДУСТРИАЛНА ЗОНА",
-              phone: "+359 2 123 4567",
+              phone: "+359 884 777 595",
               email: "office@technomash-bg.com",
               workingHours: "Понеделник - Петък: 09:00 - 18:00",
             },
