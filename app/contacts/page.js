@@ -5,6 +5,7 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 import ContactForm from "../../components/contactForm";
+import InteractiveMap from "../../components/InteractiveMap";
 import Link from "next/link";
 
 export async function generateMetadata() {
@@ -122,22 +123,39 @@ export default async function ContactsPage() {
               </dd>
             </div>
           </dl>
-
-          {/* Map placeholder */}
-          <div className="mt-10 aspect-video w-full overflow-hidden rounded-lg bg-gray-100">
-            <div className="flex h-full items-center justify-center text-gray-500">
-              <div className="text-center">
-                <MapPinIcon className="mx-auto h-12 w-12 text-gray-400" />
-                <p className="mt-2 text-sm">Карта ще бъде добавена тук</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Contact Form */}
         <div className="lg:pl-8">
           <ContactForm />
         </div>
+      </div>
+
+      {/* Map Section */}
+      <div className="bg-white py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-12">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Намерете ни на картата
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-gray-600">
+              Интерактивна карта с нашия офис в Нова Загора - кликнете на маркера за повече информация
+            </p>
+          </div>
+        </div>
+        <InteractiveMap 
+          offices={[
+            {
+              id: 1,
+              type: "Technomash",
+              address: "8900 НОВА ЗАГОРА, П.К. 30",
+              addressDetails: "ИНДУСТРИАЛНА ЗОНА",
+              phone: "+359 2 123 4567",
+              email: "office@technomash-bg.com",
+              workingHours: "Понеделник - Петък: 09:00 - 18:00",
+            },
+          ]} 
+        />
       </div>
     </div>
   );

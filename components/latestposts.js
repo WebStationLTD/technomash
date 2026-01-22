@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getLatestPosts } from "../services/posts";
 import Link from "next/link";
 import Image from "next/image";
+import InteractiveMap from "./InteractiveMap";
 
 export default function LatestPosts() {
   const [posts, setPosts] = useState([]);
@@ -103,104 +104,139 @@ export default function LatestPosts() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Office Contacts Section */}
-        <div className="mt-24 sm:mt-32 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left Side - Contact Info */}
-          <div className="bg-gray-50 p-12 rounded-lg space-y-8">
-            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-              Office Contacts
-            </h2>
-            <p className="text-base text-gray-600 leading-relaxed">
-              The textile, textile product, and apparel manufacturing industries
-              include establishments that process...
-            </p>
+      {/* Office Contacts Section - Full Width (Outside container) */}
+      <div className="mt-24 sm:mt-32 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] items-stretch">
+            {/* Left Side - Contact Info */}
+            <div className="bg-gray-50 p-8 lg:p-12 space-y-8">
+              <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+                Office Contacts
+              </h2>
+              <p className="text-base text-gray-600 leading-relaxed">
+                Нашият офис е в Нова Загора и сме на разположение за всички ваши запитвания и нужди.
+              </p>
 
-            <div className="space-y-6">
-              {/* Address */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-5 h-5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+              <div className="space-y-6">
+                {/* Address */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">
+                      8900 НОВА ЗАГОРА, П.К. 30, ИНДУСТРИАЛНА ЗОНА
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900">
-                    350 Flatbush ave New York
-                  </p>
-                  <p className="text-sm text-gray-600">NY 10018 USA.</p>
-                </div>
-              </div>
 
-              {/* Phone Numbers */}
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-5 h-5 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
+                {/* Phone Number */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">+359 884 777 595</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900">123-456-789</p>
-                  <p className="text-sm text-gray-600">234-432-456</p>
+
+                {/* Email */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">office@technomash-bg.com</p>
+                  </div>
+                </div>
+
+                {/* Office Hours */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-5 h-5 text-gray-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">Понеделник - Петък: 09:00 - 18:00</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Side - Map */}
-          <div className="relative h-96 lg:h-full min-h-[400px]">
-            <div className="absolute inset-0 bg-gray-100 rounded-lg flex items-center justify-center">
-              {/* Dotted USA Map SVG */}
-              <svg
-                className="w-full h-full p-8"
-                viewBox="0 0 800 500"
-                fill="none"
-              >
-                {/* Simplified dotted map of USA */}
-                <g opacity="0.3">
-                  {Array.from({ length: 50 }).map((_, i) => {
-                    const x = 100 + (i % 20) * 30;
-                    const y = 100 + Math.floor(i / 20) * 30;
-                    return <circle key={i} cx={x} cy={y} r="2" fill="#000" />;
-                  })}
-                </g>
-                {/* Location markers */}
-                <circle cx="500" cy="150" r="8" fill="#db2925" />
-                <circle cx="300" cy="200" r="8" fill="#db2925" />
-                <circle cx="550" cy="180" r="8" fill="#db2925" />
-                <circle cx="600" cy="250" r="8" fill="#db2925" />
-                <circle cx="450" cy="280" r="8" fill="#db2925" />
-              </svg>
+            {/* Right Side - Interactive Map (70% width, no right padding) */}
+            <div className="w-full h-[500px] lg:h-[600px]">
+              <InteractiveMap 
+                height="100%"
+                minHeight="500px"
+                offices={[
+                  {
+                    id: 1,
+                    type: "Technomash",
+                    address: "8900 НОВА ЗАГОРА, П.К. 30",
+                    addressDetails: "ИНДУСТРИАЛНА ЗОНА",
+                    phone: "+359 884 777 595",
+                    email: "office@technomash-bg.com",
+                    workingHours: "Понеделник - Петък: 09:00 - 18:00",
+                  },
+                ]} 
+              />
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
