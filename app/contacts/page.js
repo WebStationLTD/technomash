@@ -67,7 +67,7 @@ export default async function ContactsPage() {
             Контактна информация
           </h2>
           <p className="mt-6 text-lg/8 text-gray-600">
-            Нашият офис е разположен в София и сме на разположение за всички ваши запитвания и нужди.
+            Нашият офис е разположен в Нова Загора и сме на разположение за всички ваши запитвания и нужди.
           </p>
 
           <dl className="mt-10 space-y-4 text-base text-gray-600">
