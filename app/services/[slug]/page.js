@@ -19,7 +19,7 @@ export const revalidate = 3600;
 const servicePagesMap = {
   "izgrazhdane-fotovoltaichni-tsentrali": 417,
   "izgrazhdane-fotovoltaiichni-tsentrali": 417, // Alternative spelling
-  "izgrazhdane-na-poststantsii": 408,
+  "izgrazhdane-na-podstancii": 408,
 };
 
 export async function generateMetadata({ params }) {
