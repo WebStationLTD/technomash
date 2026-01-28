@@ -229,11 +229,11 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
       // Получаваме координатите от функцията
       const coordinates = getOfficeCoordinates(office, index);
 
-      // Custom marker icon - червен цвят за Technomash (#db2925)
+      // Custom marker icon - червен цвят за Technomash (#ff2e4a)
       const markerIcon = {
         path: window.google.maps.SymbolPath.CIRCLE,
         scale: 12,
-        fillColor: "#db2925", // Technomash red color
+        fillColor: "#ff2e4a", // Technomash red color
         fillOpacity: 1,
         strokeColor: "#ffffff",
         strokeWeight: 3,
@@ -252,17 +252,17 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
         content: `
           <div style="padding: 12px; max-width: 280px; font-family: system-ui, -apple-system, sans-serif;">
             <div style="display: flex; align-items: center; margin-bottom: 8px;">
-              <div style="width: 12px; height: 12px; background: #db2925; border-radius: 50%; margin-right: 8px;"></div>
+              <div style="width: 12px; height: 12px; background: #ff2e4a; border-radius: 50%; margin-right: 8px;"></div>
               <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #1f2937;">${office.type || "Technomash"}</h3>
             </div>
             <div style="color: #6b7280; font-size: 14px; line-height: 1.5;">
               <p style="margin: 4px 0;"><strong>📍 Адрес:</strong><br>${office.address}${office.addressDetails ? "<br>" + office.addressDetails : ""}</p>
-              <p style="margin: 4px 0;"><strong>📞 Телефон:</strong> <a href="tel:${office.phone}" style="color: #db2925; text-decoration: none;">${office.phone}</a></p>
-              <p style="margin: 4px 0;"><strong>✉️ Имейл:</strong> <a href="mailto:${office.email}" style="color: #db2925; text-decoration: none;">${office.email}</a></p>
+              <p style="margin: 4px 0;"><strong>📞 Телефон:</strong> <a href="tel:${office.phone}" style="color: #ff2e4a; text-decoration: none;">${office.phone}</a></p>
+              <p style="margin: 4px 0;"><strong>✉️ Имейл:</strong> <a href="mailto:${office.email}" style="color: #ff2e4a; text-decoration: none;">${office.email}</a></p>
               <p style="margin: 4px 0;"><strong>🕒 Работно време:</strong><br>${office.workingHours}</p>
             </div>
             <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid #e5e7eb;">
-              <a href="https://www.google.com/maps/dir/?api=1&destination=${coordinates.lat},${coordinates.lng}" target="_blank" style="display: inline-flex; align-items: center; padding: 6px 12px; background: #db2925; color: white; text-decoration: none; border-radius: 8px; font-size: 12px; font-weight: 500;">
+              <a href="https://www.google.com/maps/dir/?api=1&destination=${coordinates.lat},${coordinates.lng}" target="_blank" style="display: inline-flex; align-items: center; padding: 6px 12px; background: #ff2e4a; color: white; text-decoration: none; border-radius: 8px; font-size: 12px; font-weight: 500;">
                 🧭 Навигация
               </a>
             </div>
@@ -307,7 +307,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
     return (
       <div className={`bg-gray-100 flex items-center justify-center`} style={{ height, minHeight }}>
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#db2925] border-t-transparent mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#ff2e4a] border-t-transparent mx-auto mb-4"></div>
           <p className="text-gray-600 font-medium">Зареждане на картата...</p>
         </div>
       </div>
@@ -333,7 +333,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
         {/* Модерен floating overlay за iframe карта */}
         <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-white/20 max-w-sm">
           <div className="flex items-center mb-4">
-            <div className="h-3 w-3 bg-[#db2925] rounded-full mr-3"></div>
+            <div className="h-3 w-3 bg-[#ff2e4a] rounded-full mr-3"></div>
             <h3 className="font-bold text-gray-900 text-lg">
               Technomash
             </h3>
@@ -343,7 +343,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
               <div key={office.id || index} className="group cursor-pointer">
                 <div className="flex items-start gap-3 p-3 rounded-xl hover:bg-red-50 transition-colors">
                   <div
-                    className="h-4 w-4 bg-[#db2925] rounded-full mt-1 flex-shrink-0"
+                    className="h-4 w-4 bg-[#ff2e4a] rounded-full mt-1 flex-shrink-0"
                   ></div>
                   <div>
                     <p className="font-semibold text-gray-900 text-sm">
@@ -398,7 +398,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
             <div
               className="h-3 w-3 rounded-full mr-3"
               style={{
-                backgroundColor: "#db2925",
+                backgroundColor: "#ff2e4a",
                 border: "1px solid #ffffff",
               }}
             ></div>
@@ -439,12 +439,12 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
                     <div
                       className="h-4 w-4 rounded-full mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
                       style={{
-                        backgroundColor: "#db2925",
+                        backgroundColor: "#ff2e4a",
                         border: "2px solid #ffffff",
                       }}
                     ></div>
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-900 text-sm group-hover:text-[#db2925] transition-colors duration-300">
+                      <p className="font-semibold text-gray-900 text-sm group-hover:text-[#ff2e4a] transition-colors duration-300">
                         {office.type || "Technomash"}
                       </p>
                       <p className="text-xs text-gray-600">{office.address}</p>
@@ -460,7 +460,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
                     {/* Стрелка която се появява при hover */}
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <svg
-                        className="w-4 h-4 text-[#db2925]"
+                        className="w-4 h-4 text-[#ff2e4a]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -505,7 +505,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
       {!map && hasValidApiKey && (
         <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#db2925] border-t-transparent mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#ff2e4a] border-t-transparent mx-auto mb-4"></div>
             <p className="text-gray-600 font-medium">
               Инициализиране на картата...
             </p>

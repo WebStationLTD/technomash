@@ -10,23 +10,23 @@ export default function Incentives() {
             {/* Left Side - Text Content */}
             <div className="space-y-6">
               <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                About Us
+                За нас
               </p>
               <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-                Our Capabilities
+                ТЕХНОМАШ БИГ АД
               </h2>
               <p className="text-base text-gray-600 leading-relaxed">
-                We are always aiming to exceed customer expectations and provide
-                creative solutions to meet any kind of demand. Keeping up with
-                the emerging trends, market needs and combining them with our
-                technical and creative expertise...
+              Компанията започва своята дейност в областта на тежкото машиностроене, като прецизността и качеството бързо я утвърждават на пазара и тя се превръща в една от водещите индустриални групи в България. „Техномаш“ е реализирала над 50 индустриални проекта в страната и чужбина.
+              </p>
+              <p className="text-base text-gray-600 leading-relaxed">
+              От 2004 г. компанията е специализирана в изграждането на проекти за възобновяема енергия. Като главен изпълнител, ТЕХНОМАШ БИГ АД извършва инженеринг, транспорт на оборудване, монтаж, тестване, въвеждане в експлоатация и сервизно обслужване. Компанията разполага с екип от отлични професионалисти, доказали се в необичайни и извънредни ситуации.
               </p>
               <div className="pt-4">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
                 >
-                  Learn More
+                  Вижте повече
                   <svg
                     className="h-5 w-5"
                     fill="none"
@@ -52,7 +52,7 @@ export default function Incentives() {
                 className="w-full h-auto rounded-lg object-cover"
               />
               {/* Decorative red dot */}
-              <div className="absolute bottom-8 right-8 w-4 h-4 bg-[#db2925] rounded-full"></div>
+              <div className="absolute bottom-8 right-8 w-4 h-4 bg-[#ff2e4a] rounded-full"></div>
             </div>
           </div>
         </div>

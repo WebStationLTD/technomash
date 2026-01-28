@@ -77,8 +77,8 @@ export default async function HistoryPage() {
                 />
                 <defs>
                   <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                    <stop stopColor="#db2925" />
-                    <stop offset={1} stopColor="#db2925" />
+                    <stop stopColor="#ff2e4a" />
+                    <stop offset={1} stopColor="#ff2e4a" />
                   </radialGradient>
                 </defs>
               </svg>
@@ -95,7 +95,7 @@ export default async function HistoryPage() {
                   className="group relative overflow-hidden rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
                   prefetch={true}
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#db2925] transition-colors">
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#ff2e4a] transition-colors">
                     {item.title}
                   </h3>
                   {item.page && (
@@ -106,7 +106,7 @@ export default async function HistoryPage() {
                       ...
                     </p>
                   )}
-                  <div className="mt-4 flex items-center text-sm font-medium text-[#db2925] group-hover:text-[#0d7045]">
+                  <div className="mt-4 flex items-center text-sm font-medium text-[#ff2e4a] group-hover:text-[#0d7045]">
                     Научете повече
                     <svg
                       className="ml-2 h-4 w-4"

@@ -53,7 +53,7 @@ export default function LatestPosts() {
             <div className="pt-4">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-[#db2925] hover:text-[#b82220] text-base font-semibold transition-colors"
+                className="inline-flex items-center gap-2 text-[#ff2e4a] hover:text-[#b82220] text-base font-semibold transition-colors"
               >
                 VIEW ALL NEWS
               </Link>
@@ -95,7 +95,7 @@ export default function LatestPosts() {
                   onClick={() => setActiveSlide(index)}
                   className={`h-2 rounded-full transition-all ${
                     index === activeSlide
-                      ? "w-8 bg-[#db2925]"
+                      ? "w-8 bg-[#ff2e4a]"
                       : "w-2 bg-gray-300"
                   }`}
                   aria-label={`Go to slide ${index + 1}`}

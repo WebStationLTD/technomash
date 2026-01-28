@@ -74,8 +74,8 @@ export default async function Team() {
               />
               <defs>
                 <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
-                  <stop stopColor="#db2925" />
-                  <stop offset={1} stopColor="#db2925" />
+                  <stop stopColor="#ff2e4a" />
+                  <stop offset={1} stopColor="#ff2e4a" />
                 </radialGradient>
               </defs>
             </svg>

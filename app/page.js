@@ -6,6 +6,9 @@ import dynamic from "next/dynamic";
 const Incentives = dynamic(() => import("../components/incentives"), {
   ssr: true,
 });
+const Equipment = dynamic(() => import("../components/equipment"), {
+  ssr: true,
+});
 const CTA = dynamic(() => import("../components/cta"), { ssr: true });
 const Lastestposts = dynamic(() => import("../components/latestposts"), {
   ssr: true,
@@ -67,6 +70,7 @@ export default function Home() {
       <WebVitals />
       <HeroSection />
       <Incentives />
+      <Equipment />
       <CTA />
       <Lastestposts />
     </>

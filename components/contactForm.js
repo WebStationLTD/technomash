@@ -77,7 +77,7 @@ export default function ContactForm() {
     <div className="relative">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 z-10 pointer-events-none">
-          <div className="w-12 h-12 border-4 border-gray-400 border-t-[#db2925] rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-gray-400 border-t-[#ff2e4a] rounded-full animate-spin"></div>
         </div>
       )}
       <form
@@ -196,7 +196,7 @@ export default function ContactForm() {
           <div className="mt-8 flex justify-end">
             <button
               type="submit"
-              className="rounded-md bg-[#db2925] px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-gray-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="rounded-md bg-[#ff2e4a] px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-gray-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               disabled={loading}
             >
               Изпрати запитване

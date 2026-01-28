@@ -10,7 +10,7 @@ export default function CTA() {
           </h2>
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors whitespace-nowrap"
           >
             See Current Deals
             <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

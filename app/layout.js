@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={roboto.className}>
-        <NextTopLoader showSpinner={false} color="#db2925" />
+        <NextTopLoader showSpinner={false} color="#ff2e4a" />
         <BackToTop />
         <CallButton />
         <ImagePreloader />

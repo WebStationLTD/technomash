@@ -79,10 +79,10 @@ export default function Footer() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/technomash-logo.png"
+              src="/technomash-logo.svg"
               alt="Technomash Logo"
-              width={280}
-              height={93}
+              width={345}
+              height={80}
               className="h-20 w-auto"
             />
           </Link>
@@ -91,7 +91,7 @@ export default function Footer() {
           <div className="flex gap-4">
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
             >
               Careers
               <svg
@@ -110,7 +110,7 @@ export default function Footer() {
             </Link>
             <Link
               href="/contacts"
-              className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
             >
               Запитване
               <svg
@@ -241,7 +241,7 @@ export default function Footer() {
                   href="https://webstation.bg/profesionalna-seo-optimizatsia/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold hover:text-[#db2925] transition-colors"
+                  className="font-semibold hover:text-[#ff2e4a] transition-colors"
                 >
                   WebStation™
                 </a>
@@ -254,7 +254,7 @@ export default function Footer() {
                 href={item.href}
                 target={item.target}
                 rel={item.rel}
-                className="text-gray-600 hover:text-[#db2925] transition-colors"
+                className="text-gray-600 hover:text-[#ff2e4a] transition-colors"
               >
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-5 w-5" />

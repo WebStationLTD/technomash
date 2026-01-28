@@ -193,29 +193,29 @@ export default function Navigation() {
             <div className="flex items-center gap-4">
               <a
                 href="#"
-                className="text-white hover:text-[#db2925] transition-colors"
+                className="text-white hover:text-[#ff2e4a] transition-colors"
               >
                 <FaFacebookF className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="text-white hover:text-[#db2925] transition-colors"
+                className="text-white hover:text-[#ff2e4a] transition-colors"
               >
                 <FaTwitter className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="text-white hover:text-[#db2925] transition-colors"
+                className="text-white hover:text-[#ff2e4a] transition-colors"
               >
                 <FaYoutube className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="text-white hover:text-[#db2925] transition-colors"
+                className="text-white hover:text-[#ff2e4a] transition-colors"
               >
                 <FaInstagram className="h-4 w-4" />
               </a>
-              <MagnifyingGlassIcon className="h-5 w-5 text-white hover:text-[#db2925] cursor-pointer transition-colors" />
+              <MagnifyingGlassIcon className="h-5 w-5 text-white hover:text-[#ff2e4a] cursor-pointer transition-colors" />
             </div>
           </div>
         </div>
@@ -244,10 +244,10 @@ export default function Navigation() {
               </button>
               <div className="ml-4">
                 <Image
-                  src="/next-level-logo.png"
-                  alt=""
-                  width={180}
-                  height={40}
+                  src="/technomash-logo.svg"
+                  alt="Technomash Logo"
+                  width={345}
+                  height={80}
                   className="h-10 w-auto"
                 />
               </div>
@@ -299,7 +299,7 @@ export default function Navigation() {
                     ) : (
                       <Link
                         href={page.href}
-                        className="-m-2 block p-2 font-semibold text-gray-900 text-base hover:text-[#db2925] transition-colors"
+                        className="-m-2 block p-2 font-semibold text-gray-900 text-base hover:text-[#ff2e4a] transition-colors"
                         onClick={() => setOpen(false)}
                         prefetch={true}
                       >
@@ -314,7 +314,7 @@ export default function Navigation() {
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-xl font-bold text-center text-gray-900 hover:text-[#db2925] data-headlessui-state-selected:border-[#db2925] data-headlessui-state-selected:text-[#db2925]"
+                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-xl font-bold text-center text-gray-900 hover:text-[#ff2e4a] data-headlessui-state-selected:border-[#ff2e4a] data-headlessui-state-selected:text-[#ff2e4a]"
                     >
                       {category.name}
                     </Tab>
@@ -324,7 +324,7 @@ export default function Navigation() {
               {/* Loader */}
               {loading && (
                 <div className="flex justify-center py-10">
-                  <div className="w-12 h-12 border-4 border-gray-500 border-t-[#db2925] rounded-full animate-spin"></div>
+                  <div className="w-12 h-12 border-4 border-gray-500 border-t-[#ff2e4a] rounded-full animate-spin"></div>
                 </div>
               )}
               {!loading && (
@@ -368,10 +368,10 @@ export default function Navigation() {
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
                 <Image
-                  src="/technomash-logo.png"
+                  src="/technomash-logo.svg"
                   alt="Technomash Logo"
-                  width={280}
-                  height={93}
+                  width={345}
+                  height={80}
                   className="h-20 w-auto"
                   priority
                 />
@@ -471,7 +471,7 @@ export default function Navigation() {
               {/* CTA Button */}
               <Link
                 href="/contacts"
-                className="hidden lg:inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
+                className="hidden lg:inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-6 py-2.5 rounded-md text-sm font-semibold transition-colors"
               >
                 Запитване
                 <svg
