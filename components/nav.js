@@ -21,42 +21,22 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import Image from "next/image";
 import { getServicesNav } from "../services/services";
+import { getNavigationMenu } from "../services/navigation";
 import { searchContent } from "../services/search";
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
-  // Navigation data is static – no loading state needed
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [historyOpen, setHistoryOpen] = useState(false);
+  const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef(null);
+  const [serviceCategories, setServiceCategories] = useState([]);
   const [navigation, setNavigation] = useState({
-    categories: [
-      {
-        id: "categories",
-        name: "Услуги",
-        // Static services for the mega menu
-        featured: [
-          {
-            name: "Изграждане фотоволтаични централи",
-            href: "/uslugi/izgrazhdane-fotovoltaichni-tsentrali",
-            imageSrc: "/placeholder.webp",
-            imageAlt: "Изграждане фотоволтаични централи",
-          },
-          {
-            name: "Изграждане на подстанции",
-            href: "/uslugi/izgrazhdane-na-podstancii",
-            imageSrc: "/placeholder.webp",
-            imageAlt: "Изграждане на подстанции",
-          },
-        ],
-        services: [],
-      },
-    ],
     pages: [
       { name: "Начало", href: "/" },
       {
@@ -109,30 +89,20 @@ export default function Navigation() {
         name: "Услуги",
         href: "#",
         hasDropdown: true,
-        children: [
-          {
-            name: "Изграждане фотоволтаични централи",
-            href: "/uslugi/izgrazhdane-fotovoltaichni-tsentrali",
-          },
-          {
-            name: "Изграждане на подстанции",
-            href: "/uslugi/izgrazhdane-na-podstancii",
-          },
-        ],
+        isDynamic: true,  // Flag to indicate this menu is loaded dynamically
       },
       { name: "Екип", href: "/team" },
       { name: "Контакти", href: "/contacts" },
     ],
   });
 
-  // NOTE: Old dynamic fetching of menu items from WordPress is kept commented for reference.
-  // It is no longer needed because the navigation is now static and simple.
-  /*
+  // Fetch dynamic service categories and services
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Dynamic fetching for menu items was here.
+        const menuData = await getNavigationMenu();
+        setServiceCategories(menuData.categories || []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching navigation data:", error);
@@ -142,7 +112,6 @@ export default function Navigation() {
 
     fetchData();
   }, []);
-  */
 
   useEffect(() => {
     if (searchQuery.length < 3) {
@@ -248,7 +217,7 @@ export default function Navigation() {
                   alt="Technomash Logo"
                   width={345}
                   height={80}
-                  className="h-10 w-auto"
+                  className="h-8 w-auto"
                 />
               </div>
             </div>
@@ -263,7 +232,37 @@ export default function Navigation() {
                           {page.name}
                         </div>
                         <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
-                          {page.children && page.children.length > 0 ? (
+                          {page.isDynamic ? (
+                            // Dynamic services menu with categories
+                            serviceCategories.length > 0 ? (
+                              serviceCategories.map((category) => (
+                                <div key={category.id}>
+                                  <div className="-m-2 block p-2 text-sm text-gray-900 font-semibold">
+                                    {category.name}
+                                  </div>
+                                  {category.services && category.services.length > 0 && (
+                                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
+                                      {category.services.map((service) => (
+                                        <Link
+                                          key={service.id}
+                                          href={service.href}
+                                          className="-m-2 block p-2 text-xs text-gray-500 hover:text-gray-700 hover:font-medium transition-colors"
+                                          onClick={() => setOpen(false)}
+                                          prefetch={true}
+                                        >
+                                          {service.name}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              ))
+                            ) : loading ? (
+                              <div className="px-2 py-2 text-gray-500 text-sm">Зареждане...</div>
+                            ) : (
+                              <div className="px-2 py-2 text-gray-500 text-sm">Няма налични услуги</div>
+                            )
+                          ) : page.children && page.children.length > 0 ? (
                             page.children.map((child) => (
                               <div key={child.name}>
                                 <Link
@@ -309,61 +308,13 @@ export default function Navigation() {
                   </div>
                 ))}
               </div>
-              <div className="border-b border-gray-200">
-                <TabList className="-mb-px flex space-x-8 px-4">
-                  {navigation.categories.map((category) => (
-                    <Tab
-                      key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-xl font-bold text-center text-gray-900 hover:text-[#ff2e4a] data-headlessui-state-selected:border-[#ff2e4a] data-headlessui-state-selected:text-[#ff2e4a]"
-                    >
-                      {category.name}
-                    </Tab>
-                  ))}
-                </TabList>
-              </div>
-              {/* Loader */}
-              {loading && (
-                <div className="flex justify-center py-10">
-                  <div className="w-12 h-12 border-4 border-gray-500 border-t-[#ff2e4a] rounded-full animate-spin"></div>
-                </div>
-              )}
-              {!loading && (
-                <TabPanels as={Fragment}>
-                  {navigation.categories.map((category) => (
-                    <TabPanel
-                      key={category.name}
-                      className="space-y-6 px-4 pt-6 pb-8"
-                    >
-                      <ul className="flex flex-col space-y-4">
-                        {[...category.featured, ...category.services].map(
-                          (service) => (
-                            <li
-                              key={service.id || service.name}
-                              className="flow-root"
-                            >
-                              <Link
-                                href={service.href}
-                                className="-m-2 block p-2 font-medium text-gray-900"
-                                onClick={() => setOpen(false)}
-                                prefetch={true}
-                              >
-                                {service.name}
-                              </Link>
-                            </li>
-                          )
-                        )}
-                      </ul>
-                    </TabPanel>
-                  ))}
-                </TabPanels>
-              )}
             </TabGroup>
           </DialogPanel>
         </div>
       </Dialog>
       <header className="relative bg-white shadow-sm">
         <nav aria-label="Top" className="w-full px-5">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo - Left (Mobile & Desktop) */}
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
@@ -372,7 +323,7 @@ export default function Navigation() {
                   alt="Technomash Logo"
                   width={345}
                   height={80}
-                  className="h-20 w-auto"
+                  className="h-12 lg:h-20 w-auto"
                   priority
                 />
               </Link>
@@ -394,7 +345,62 @@ export default function Navigation() {
                       <div className="absolute left-1/2 z-10 mt-0 flex w-screen max-w-max -translate-x-1/2 px-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                         <div className="w-64 flex-auto rounded-lg bg-white text-sm leading-6 shadow-xl ring-1 ring-gray-900/5">
                           <div className="p-2">
-                            {page.children && page.children.length > 0 ? (
+                            {page.isDynamic ? (
+                              // Dynamic services menu with categories
+                              serviceCategories.length > 0 ? (
+                                serviceCategories.map((category) => {
+                                  if (category.services && category.services.length > 0) {
+                                    return (
+                                      <div
+                                        key={category.id}
+                                        className="relative"
+                                        onMouseEnter={() => setHoveredCategoryId(category.id)}
+                                        onMouseLeave={() => setHoveredCategoryId(null)}
+                                      >
+                                        <button
+                                          type="button"
+                                          className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                        >
+                                          <span className="flex-1">{category.name}</span>
+                                          <ChevronDownIcon className="h-4 w-4 ml-2 flex-shrink-0" />
+                                        </button>
+                                        {hoveredCategoryId === category.id && (
+                                          <div className="absolute left-full top-0 ml-0 w-64 transition-all duration-200 z-20 rounded-lg bg-white shadow-xl ring-1 ring-gray-900/5">
+                                            <div className="p-2">
+                                              {category.services.map((service) => (
+                                                <Link
+                                                  key={service.id}
+                                                  href={service.href}
+                                                  className="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                                  prefetch={true}
+                                                >
+                                                  {service.name}
+                                                </Link>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+
+                                  return (
+                                    <Link
+                                      key={category.id}
+                                      href={category.href}
+                                      className="block rounded-md px-3 py-2 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                                      prefetch={true}
+                                    >
+                                      {category.name}
+                                    </Link>
+                                  );
+                                })
+                              ) : loading ? (
+                                <div className="px-3 py-2 text-gray-500 text-sm">Зареждане...</div>
+                              ) : (
+                                <div className="px-3 py-2 text-gray-500 text-sm">Няма налични услуги</div>
+                              )
+                            ) : page.children && page.children.length > 0 ? (
                               page.children.map((child) => {
                                 if (
                                   child.hasSubmenu &&

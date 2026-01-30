@@ -27,24 +27,26 @@ export async function generateMetadata({ params }) {
   const pageId = servicePagesMap[slug];
 
   if (!pageId) {
-    // Try to get by slug from WordPress
+    // Try to get by slug from WordPress services CPT
     try {
+      // URL encode the slug for the API request
+      const encodedSlug = encodeURIComponent(slug);
       const response = await fetch(
-        `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,title`
+        `https://technomash.admin-panels.com/wp-json/wp/v2/services?slug=${encodedSlug}&_fields=id,slug,yoast_head_json,title`
       );
       if (response.ok) {
-        const pages = await response.json();
-        if (pages.length > 0) {
-          const page = pages[0];
-          const meta = page.yoast_head_json || {};
+        const services = await response.json();
+        if (services.length > 0) {
+          const service = services[0];
+          const meta = service.yoast_head_json || {};
           return {
-            title: meta.title || page.title?.rendered || "Услуга - Technomash",
+            title: meta.title || service.title?.rendered || "Услуга - Technomash",
             description: meta.description || "Услуга - Technomash",
           };
         }
       }
     } catch (error) {
-      console.error("Error fetching page:", error);
+      console.error("Error fetching service:", error);
     }
     return {
       title: "Услуга - Technomash",
@@ -97,19 +99,21 @@ export default async function ServicePage({ params }) {
     if (pageId) {
       page = await getPageById(pageId);
     } else {
-      // Try to get by slug from WordPress
+      // Try to get by slug from WordPress services CPT
       try {
+        // URL encode the slug for the API request
+        const encodedSlug = encodeURIComponent(slug);
         const response = await fetch(
-          `https://technomash.admin-panels.com/wp-json/wp/v2/pages?slug=${slug}&_fields=id,slug,yoast_head_json,date,title,content`
+          `https://technomash.admin-panels.com/wp-json/wp/v2/services?slug=${encodedSlug}&_fields=id,slug,yoast_head_json,date,title,content`
         );
         if (response.ok) {
-          const pages = await response.json();
-          if (pages.length > 0) {
-            page = pages[0];
+          const services = await response.json();
+          if (services.length > 0) {
+            page = services[0];
           }
         }
       } catch (error) {
-        console.error("Error fetching page:", error);
+        console.error("Error fetching service:", error);
       }
     }
 

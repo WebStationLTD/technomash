@@ -83,7 +83,7 @@ export default function Footer() {
               alt="Technomash Logo"
               width={345}
               height={80}
-              className="h-20 w-auto"
+              className="h-12 lg:h-20 w-auto"
             />
           </Link>
 

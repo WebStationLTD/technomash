@@ -32,11 +32,8 @@ export default function Hero() {
             {/* Text inside image */}
             <div className="absolute inset-0 z-10 flex flex-col justify-center px-6 py-10">
               <h1 className="text-3xl font-semibold tracking-tight text-white">
-                Добре дошли в ТЕХНОМАШ БИГ АД
+                Техномаш: Прецизност във всеки детайл, мощ във всяко решение.
               </h1>
-              <p className="mt-4 text-sm text-gray-100 leading-relaxed">
-              „ТЕХНОМАШ-БЪЛГАРСКА ИНДУСТРИАЛНА ГРУПА“ АД е компания с богат опит, специализирана в тежкото машиностроене, строителството и възобновяемите енергийни източници.
-              </p>
               <div className="mt-6">
                 <Link
                   href="/services"
@@ -82,12 +79,8 @@ export default function Hero() {
               {/* Left Side - Text Content */}
               <div className="space-y-6">
                 <h1 className="text-5xl font-bold tracking-tight text-gray-900 leading-tight">
-                  Добре дошли в <br />
-                  ТЕХНОМАШ БИГ АД
+                  Техномаш: Прецизност във всеки детайл, мощ във всяко решение.
                 </h1>
-                <p className="text-base text-gray-900 leading-relaxed max-w-lg">
-                  „ТЕХНОМАШ-БЪЛГАРСКА ИНДУСТРИАЛНА ГРУПА“ АД е компания с богат опит, специализирана в тежкото машиностроене, строителството и възобновяемите енергийни източници.
-                </p>
                 <div className="pt-4">
                   <Link
                     href="/services"
@@ -118,7 +111,7 @@ export default function Hero() {
           <div className="absolute bottom-0 left-0 right-0 transform translate-y-1/2 px-4 sm:px-6 lg:px-8 z-20">
             <div className="mx-auto max-w-7xl">
               <div className="grid grid-cols-4 gap-6">
-                {/* Feature Box 1 - Weaving */}
+                {/* Feature Box 1 - Анализ и Одит */}
                 <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition-colors">
@@ -127,13 +120,13 @@ export default function Hero() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Weaving</h3>
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Анализ и Одит</h3>
                   <p className="text-sm text-gray-600 text-center leading-relaxed">
-                    Manufacturer textile&apos;s weaving unit is fully equipped with sulzer, auto and power looms...
+                    Експертно проучване на соларния потенциал и консултации за постигане на максимална ефективност и възвръщаемост на вашата инвестиция.
                   </p>
                 </div>
 
-                {/* Feature Box 2 - Processing */}
+                {/* Feature Box 2 - Проектиране */}
                 <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition-colors">
@@ -142,13 +135,13 @@ export default function Hero() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Processing</h3>
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Проектиране</h3>
                   <p className="text-sm text-gray-600 text-center leading-relaxed">
-                    We manage our processing requirements to utilize specialized services...
+                    Изготвяне на цялостни идейни и работни инвестиционни проекти, съобразени с най-високите технически стандарти и спецификите на терена.
                   </p>
                 </div>
 
-                {/* Feature Box 3 - Printing */}
+                {/* Feature Box 3 - Директни Доставки */}
                 <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition-colors">
@@ -157,13 +150,13 @@ export default function Hero() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Printing</h3>
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Директни Доставки</h3>
                   <p className="text-sm text-gray-600 text-center leading-relaxed">
-                    We have been engaged with modern units for all our requirements of continuous bleach...
+                    Осигуряваме първокласно оборудване чрез стабилни партньорства с водещи световни производители в сектора на възобновяемата енергия.
                   </p>
                 </div>
 
-                {/* Feature Box 4 - Stitching */}
+                {/* Feature Box 4 - Изпълнение „До Ключ" */}
                 <div className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <div className="flex justify-center mb-4">
                     <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center group-hover:bg-red-100 transition-colors">
@@ -172,9 +165,9 @@ export default function Hero() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Stitching</h3>
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение „До Ключ"</h3>
                   <p className="text-sm text-gray-600 text-center leading-relaxed">
-                    At Manufacturer Textile, we stitch fabric as well as garments. Our in-house stitching...
+                    Професионално изграждане и пускане в експлоатация от опитни екипи, гарантиращи безкомпромисно качество на финалната инсталация.
                   </p>
                 </div>
               </div>
@@ -187,7 +180,7 @@ export default function Hero() {
       <div className="lg:hidden bg-white px-4 sm:px-6 py-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-4 sm:gap-6">
-            {/* Feature Box 1 - Weaving */}
+            {/* Feature Box 1 - Анализ и Одит */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center">
@@ -196,13 +189,13 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Weaving</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Анализ и Одит</h3>
               <p className="text-sm text-gray-600 text-center leading-relaxed">
-                Manufacturer textile&apos;s weaving unit is fully equipped with sulzer, auto and power looms...
+                Експертно проучване на соларния потенциал и консултации за постигане на максимална ефективност и възвръщаемост на вашата инвестиция.
               </p>
             </div>
 
-            {/* Feature Box 2 - Processing */}
+            {/* Feature Box 2 - Проектиране */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center">
@@ -211,13 +204,13 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Processing</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Проектиране</h3>
               <p className="text-sm text-gray-600 text-center leading-relaxed">
-                We manage our processing requirements to utilize specialized services...
+                Изготвяне на цялостни идейни и работни инвестиционни проекти, съобразени с най-високите технически стандарти и спецификите на терена.
               </p>
             </div>
 
-            {/* Feature Box 3 - Printing */}
+            {/* Feature Box 3 - Директни Доставки */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center">
@@ -226,13 +219,13 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Printing</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Директни Доставки</h3>
               <p className="text-sm text-gray-600 text-center leading-relaxed">
-                We have been engaged with modern units for all our requirements of continuous bleach...
+                Осигуряваме първокласно оборудване чрез стабилни партньорства с водещи световни производители в сектора на възобновяемата енергия.
               </p>
             </div>
 
-            {/* Feature Box 4 - Stitching */}
+            {/* Feature Box 4 - Изпълнение „До Ключ" */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-50 rounded-lg flex items-center justify-center">
@@ -241,9 +234,9 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Stitching</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение „До Ключ"</h3>
               <p className="text-sm text-gray-600 text-center leading-relaxed">
-                At Manufacturer Textile, we stitch fabric as well as garments. Our in-house stitching...
+                Професионално изграждане и пускане в експлоатация от опитни екипи, гарантиращи безкомпромисно качество на финалната инсталация.
               </p>
             </div>
           </div>
