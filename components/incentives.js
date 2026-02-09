@@ -1,6 +1,43 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getNavigationMenu } from "../services/navigation";
 
 export default function Incentives() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch categories and services from WordPress API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const menuData = await getNavigationMenu();
+        setCategories(menuData.categories || []);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching navigation data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Get the first 3 categories for the 3 cards
+  const category1 = categories[0] || {
+    name: "ВЪЗОБНОВЯЕМА ЕНЕРГИЯ",
+    services: [],
+  };
+  const category2 = categories[1] || {
+    name: "ЕНЕРГИЙНА ИНФРАСТРУКТУРА",
+    services: [],
+  };
+  const category3 = categories[2] || {
+    name: "ИНФРАСТРУКТУРА И СТРОИТЕЛСТВО",
+    services: [],
+  };
   return (
     <>
       {/* Our Capabilities Section */}
@@ -16,15 +53,24 @@ export default function Incentives() {
                 ТЕХНОМАШ БИГ АД
               </h2>
               <p className="text-base text-gray-600 leading-relaxed">
-              Компанията започва своята дейност в областта на тежкото машиностроене, като прецизността и качеството бързо я утвърждават на пазара и тя се превръща в една от водещите индустриални групи в България. „Техномаш“ е реализирала над 50 индустриални проекта в страната и чужбина.
+                Компанията започва своята дейност в областта на тежкото
+                машиностроене, като прецизността и качеството бързо я
+                утвърждават на пазара и тя се превръща в една от водещите
+                индустриални групи в България. „Техномаш“ е реализирала над 50
+                индустриални проекта в страната и чужбина.
               </p>
               <p className="text-base text-gray-600 leading-relaxed">
-              От 2004 г. компанията е специализирана в изграждането на проекти за възобновяема енергия. Като главен изпълнител, ТЕХНОМАШ БИГ АД извършва инженеринг, транспорт на оборудване, монтаж, тестване, въвеждане в експлоатация и сервизно обслужване. Компанията разполага с екип от отлични професионалисти, доказали се в необичайни и извънредни ситуации.
+                От 2004 г. компанията е специализирана в изграждането на проекти
+                за възобновяема енергия. Като главен изпълнител, ТЕХНОМАШ БИГ АД
+                извършва инженеринг, транспорт на оборудване, монтаж, тестване,
+                въвеждане в експлоатация и сервизно обслужване. Компанията
+                разполага с екип от отлични професионалисти, доказали се в
+                необичайни и извънредни ситуации.
               </p>
               <div className="pt-4">
                 <Link
                   href="/services"
-                  className="inline-flex items-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
                 >
                   Вижте повече
                   <svg
@@ -62,9 +108,9 @@ export default function Incentives() {
       <div className="bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-0 lg:px-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Product Card 1 - Holiday Extras */}
+            {/* Service Card 1 - Renewable Energy */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
-              <div className="relative h-80">
+              <div className="relative h-96">
                 <img
                   src="/hero-image-mobile.jpg"
                   alt="Holiday Extras"
@@ -72,24 +118,35 @@ export default function Incentives() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
-                  <h3 className="text-2xl font-bold mb-4">HOLIDAY EXTRAS</h3>
-                  <p className="text-sm font-semibold mb-2">
-                    20% OFF EVERYTHING!
-                  </p>
-                  <p className="text-xs mb-4">YES, YOU READ THAT RIGHT</p>
-                  <Link
-                    href="/shop"
-                    className="text-sm font-semibold border-b border-white hover:border-transparent transition-colors"
-                  >
-                    SHOP THE EDIT
-                  </Link>
+                  <h3 className="text-2xl font-bold mb-6">{category1.name}</h3>
+                  {loading ? (
+                    <div className="flex justify-center py-4">
+                      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    <ul className="text-sm space-y-2 text-left w-full max-w-xs">
+                      {category1.services &&
+                        category1.services.map((service) => (
+                          <li key={service.id}>
+                            <Link
+                              href={service.href}
+                              className="hover:text-[#db2925] transition-colors flex items-start"
+                              prefetch={true}
+                            >
+                              <span className="mr-2">•</span>
+                              <span>{service.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Product Card 2 - Jumpsuits & Boiler Suits */}
+            {/* Service Card 2 - Energy Infrastructure */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
-              <div className="relative h-80">
+              <div className="relative h-96">
                 <img
                   src="/menu-hero-image.jpg"
                   alt="Jumpsuits & Boiler Suits"
@@ -97,26 +154,35 @@ export default function Incentives() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
-                  <h3 className="text-2xl font-bold mb-4">
-                    JUMPSUITS & BOILER SUITS
-                  </h3>
-                  <p className="text-sm font-semibold mb-2">
-                    20% OFF EVERYTHING!
-                  </p>
-                  <p className="text-xs mb-4">YES, YOU READ THAT RIGHT</p>
-                  <Link
-                    href="/shop"
-                    className="text-sm font-semibold border-b border-white hover:border-transparent transition-colors"
-                  >
-                    SHOP THE EDIT
-                  </Link>
+                  <h3 className="text-2xl font-bold mb-6">{category2.name}</h3>
+                  {loading ? (
+                    <div className="flex justify-center py-4">
+                      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    <ul className="text-sm space-y-2 text-left w-full max-w-xs">
+                      {category2.services &&
+                        category2.services.map((service) => (
+                          <li key={service.id}>
+                            <Link
+                              href={service.href}
+                              className="hover:text-[#db2925] transition-colors flex items-start"
+                              prefetch={true}
+                            >
+                              <span className="mr-2">•</span>
+                              <span>{service.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* Product Card 3 - Summer Tops */}
+            {/* Service Card 3 - Infrastructure & Construction */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
-              <div className="relative h-80">
+              <div className="relative h-96">
                 <img
                   src="/hero-image-desktop.jpg"
                   alt="Summer Tops"
@@ -124,17 +190,28 @@ export default function Incentives() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
-                  <h3 className="text-2xl font-bold mb-4">SUMMER TOPS</h3>
-                  <p className="text-sm font-semibold mb-2">
-                    20% OFF EVERYTHING!
-                  </p>
-                  <p className="text-xs mb-4">YES, YOU READ THAT RIGHT</p>
-                  <Link
-                    href="/shop"
-                    className="text-sm font-semibold border-b border-white hover:border-transparent transition-colors"
-                  >
-                    SHOP THE EDIT
-                  </Link>
+                  <h3 className="text-2xl font-bold mb-6">{category3.name}</h3>
+                  {loading ? (
+                    <div className="flex justify-center py-4">
+                      <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ) : (
+                    <ul className="text-sm space-y-2 text-left w-full max-w-xs">
+                      {category3.services &&
+                        category3.services.map((service) => (
+                          <li key={service.id}>
+                            <Link
+                              href={service.href}
+                              className="hover:text-[#db2925] transition-colors flex items-start"
+                              prefetch={true}
+                            >
+                              <span className="mr-2">•</span>
+                              <span>{service.name}</span>
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>

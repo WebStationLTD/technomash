@@ -14,10 +14,10 @@ export default async function Blog({ searchParams }) {
 
   // Fetch posts from WordPress API with caching enabled
   const response = await fetch(
-    `https://technomash.admin-panels.com/wp-json/wp/v2/posts?page=${currentPage}&per_page=${perPage}&_fields=id,yoast_head_json,date,slug,title,content`,
+    `https://technomash.admin-panels.com/wp-json/wp/v2/posts?page=${currentPage}&per_page=${perPage}&_embed&_fields=id,yoast_head_json,date,slug,title,content,featured_media,_links`,
     {
       next: { revalidate: 120 },
-    }
+    },
   );
 
   if (!response.ok) {
@@ -72,44 +72,70 @@ export default async function Blog({ searchParams }) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           {posts.length > 0 ? (
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-              {posts.map((post) => (
-                <Link href={`/blog/${post.slug}`} key={post.id} prefetch={true}>
-                  <article className="flex flex-col items-start justify-between">
-                    <div className="relative w-full">
-                      <Image
-                        width={380}
-                        height={250}
-                        alt=""
-                        src={
-                          post.yoast_head_json?.og_image?.[0]?.url ||
-                          "/placeholder.webp"
-                        }
-                        className="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
-                      />
-                      <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
-                    </div>
-                    <div className="max-w-xl">
-                      <div className="mt-8 flex items-center gap-x-4 text-xs">
-                        <time dateTime={post.date} className="text-gray-500">
-                          {new Date(post.date).toLocaleDateString()}
-                        </time>
+              {posts.map((post) => {
+                // Function to extract image URL
+                const getImageUrl = () => {
+                  // Try featured media first
+                  if (post._embedded?.["wp:featuredmedia"]?.[0]?.source_url) {
+                    return post._embedded["wp:featuredmedia"][0].source_url;
+                  }
+                  // Try Yoast OG image
+                  if (post.yoast_head_json?.og_image?.[0]?.url) {
+                    return post.yoast_head_json.og_image[0].url;
+                  }
+                  // Try to extract first image from content
+                  if (post.content?.rendered) {
+                    const imgMatch = post.content.rendered.match(
+                      /<img[^>]+src="([^">]+)"/,
+                    );
+                    if (imgMatch && imgMatch[1]) {
+                      return imgMatch[1];
+                    }
+                  }
+                  // Fallback to default image
+                  return "/hero-image-desktop.jpg";
+                };
+
+                return (
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    key={post.id}
+                    prefetch={true}
+                  >
+                    <article className="flex flex-col items-start justify-between">
+                      <div className="relative w-full">
+                        <Image
+                          width={380}
+                          height={250}
+                          alt={post.title.rendered}
+                          src={getImageUrl()}
+                          className="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
+                        />
+                        <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
                       </div>
-                      <div className="group relative">
-                        <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                          {post.title.rendered}
-                        </h3>
-                        <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
-                          {post.content.rendered
-                            ? post.content.rendered
-                                .replace(/<[^>]+>/g, "")
-                                .substring(0, 150) + "..."
-                            : "No description available"}
-                        </p>
+                      <div className="max-w-xl">
+                        <div className="mt-8 flex items-center gap-x-4 text-xs">
+                          <time dateTime={post.date} className="text-gray-500">
+                            {new Date(post.date).toLocaleDateString()}
+                          </time>
+                        </div>
+                        <div className="group relative">
+                          <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+                            {post.title.rendered}
+                          </h3>
+                          <p className="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+                            {post.content.rendered
+                              ? post.content.rendered
+                                  .replace(/<[^>]+>/g, "")
+                                  .substring(0, 150) + "..."
+                              : "No description available"}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                </Link>
-              ))}
+                    </article>
+                  </Link>
+                );
+              })}
             </div>
           ) : (
             <p className="text-gray-600 text-center mt-10">

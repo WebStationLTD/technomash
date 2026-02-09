@@ -16,26 +16,25 @@ export default function LatestPosts() {
     setLoading(true);
     const fetchLatestPosts = async () => {
       const postsData = await getLatestPosts();
-      setPosts(postsData);
+      // Get only the last 3 posts
+      const latest3Posts = postsData ? postsData.slice(0, 3) : [];
+      setPosts(latest3Posts);
       setLoading(false);
     };
 
     fetchLatestPosts();
   }, []);
 
-  // Placeholder news data for demo
-  const newsItems = [
-    {
-      id: 1,
-      title: "New Fabric opening",
-      image: "/menu-hero-image.jpg",
-    },
-    {
-      id: 2,
-      title: "Applied DNA Sciences, WestPoint Home Sign",
-      image: "/hero-image-desktop.jpg",
-    },
-  ];
+  // Auto-rotate carousel every 5 seconds
+  useEffect(() => {
+    if (posts.length === 0) return;
+
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % posts.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [posts.length]);
 
   return (
     <div className="bg-white py-24">
@@ -44,64 +43,129 @@ export default function LatestPosts() {
           {/* Left Side - Text Content */}
           <div className="space-y-6">
             <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-              News & Media Center
+              Новини и Медиен Център
             </h2>
             <p className="text-base text-gray-600 leading-relaxed">
-              We are always open for any kind of cooperation and looking for new
-              promising projects
+              Следете последните новини и актуализации за нашите проекти,
+              постижения и развитие в индустриалния сектор
             </p>
             <div className="pt-4">
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-[#ff2e4a] hover:text-[#b82220] text-base font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-[#db2925] hover:bg-[#b82220] text-white px-6 py-3 rounded-md text-base font-semibold transition-colors"
               >
-                VIEW ALL NEWS
+                Вижте всички новини
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
               </Link>
             </div>
           </div>
 
           {/* Right Side - News Carousel */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-lg">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-              >
-                {newsItems.map((item) => (
-                  <div key={item.id} className="flex-shrink-0 w-full">
-                    <div className="relative h-80 overflow-hidden group cursor-pointer">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <div className="absolute bottom-6 left-6 right-6">
-                        <h3 className="text-xl font-semibold text-white">
-                          {item.title}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            {loading ? (
+              <div className="flex justify-center items-center h-80">
+                <div className="w-12 h-12 border-4 border-gray-300 border-t-[#db2925] rounded-full animate-spin"></div>
               </div>
-            </div>
+            ) : posts.length > 0 ? (
+              <>
+                <div className="relative overflow-hidden rounded-lg">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+                  >
+                    {posts.map((post) => {
+                      // Function to extract image URL
+                      const getImageUrl = () => {
+                        // Try featured media first
+                        if (
+                          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url
+                        ) {
+                          return post._embedded["wp:featuredmedia"][0]
+                            .source_url;
+                        }
+                        // Try Yoast OG image
+                        if (post.yoast_head_json?.og_image?.[0]?.url) {
+                          return post.yoast_head_json.og_image[0].url;
+                        }
+                        // Try to extract first image from content
+                        if (post.content?.rendered) {
+                          const imgMatch = post.content.rendered.match(
+                            /<img[^>]+src="([^">]+)"/,
+                          );
+                          if (imgMatch && imgMatch[1]) {
+                            return imgMatch[1];
+                          }
+                        }
+                        // Fallback to placeholder
+                        return "/hero-image-desktop.jpg";
+                      };
 
-            {/* Carousel Indicators */}
-            <div className="flex justify-center gap-2 mt-6">
-              {newsItems.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveSlide(index)}
-                  className={`h-2 rounded-full transition-all ${
-                    index === activeSlide
-                      ? "w-8 bg-[#ff2e4a]"
-                      : "w-2 bg-gray-300"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+                      return (
+                        <div key={post.id} className="flex-shrink-0 w-full">
+                          <Link href={`/blog/${post.slug}`} prefetch={true}>
+                            <div className="relative h-80 overflow-hidden group cursor-pointer">
+                              <img
+                                src={getImageUrl()}
+                                alt={post.title.rendered}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                              <div className="absolute bottom-6 left-6 right-6">
+                                <h3 className="text-xl font-semibold text-white line-clamp-2">
+                                  {post.title.rendered}
+                                </h3>
+                                <p className="text-sm text-gray-200 mt-2">
+                                  {new Date(post.date).toLocaleDateString(
+                                    "bg-BG",
+                                    {
+                                      year: "numeric",
+                                      month: "long",
+                                      day: "numeric",
+                                    },
+                                  )}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Carousel Indicators */}
+                <div className="flex justify-center gap-2 mt-6">
+                  {posts.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveSlide(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        index === activeSlide
+                          ? "w-8 bg-[#db2925]"
+                          : "w-2 bg-gray-300"
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-center items-center h-80 text-gray-500">
+                Няма налични статии
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -109,134 +173,141 @@ export default function LatestPosts() {
       {/* Office Contacts Section - Full Width (Outside container) */}
       <div className="mt-24 sm:mt-32 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] items-stretch">
-            {/* Left Side - Contact Info */}
-            <div className="bg-gray-50 p-8 lg:p-12 space-y-8">
-              <h2 className="text-4xl font-bold tracking-tight text-gray-900">
-                Office Contacts
-              </h2>
-              <p className="text-base text-gray-600 leading-relaxed">
-                Нашият офис е в Нова Загора и сме на разположение за всички ваши запитвания и нужди.
-              </p>
+          {/* Left Side - Contact Info */}
+          <div className="bg-gray-50 p-8 lg:p-12 space-y-8">
+            <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+              Office Contacts
+            </h2>
+            <p className="text-base text-gray-600 leading-relaxed">
+              Нашият офис е в Нова Загора и сме на разположение за всички ваши
+              запитвания и нужди.
+            </p>
 
-              <div className="space-y-6">
-                {/* Address */}
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">
-                      8900 НОВА ЗАГОРА, П.К. 30, ИНДУСТРИАЛНА ЗОНА
-                    </p>
-                  </div>
+            <div className="space-y-6">
+              {/* Address */}
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
                 </div>
-
-                {/* Phone Number */}
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">+359 884 777 595</p>
-                  </div>
+                <div>
+                  <p className="font-semibold text-gray-900">
+                    8900 НОВА ЗАГОРА, П.К. 30, ИНДУСТРИАЛНА ЗОНА
+                  </p>
                 </div>
+              </div>
 
-                {/* Email */}
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">office@technomash-bg.com</p>
-                  </div>
+              {/* Phone Number */}
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
                 </div>
+                <div>
+                  <p className="font-semibold text-gray-900">
+                    +359 884 777 595
+                  </p>
+                </div>
+              </div>
 
-                {/* Office Hours */}
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Понеделник - Петък: 09:00 - 18:00</p>
-                  </div>
+              {/* Email */}
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">
+                    office@technomash-bg.com
+                  </p>
+                </div>
+              </div>
+
+              {/* Office Hours */}
+              <div className="flex items-center gap-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-gray-900">
+                    Понеделник - Петък: 09:00 - 18:00
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Right Side - Interactive Map (70% width, no right padding) */}
-            <div className="w-full h-[500px] lg:h-[600px]">
-              <InteractiveMap 
-                height="100%"
-                minHeight="500px"
-                offices={[
-                  {
-                    id: 1,
-                    type: "Technomash",
-                    address: "8900 НОВА ЗАГОРА, П.К. 30",
-                    addressDetails: "ИНДУСТРИАЛНА ЗОНА",
-                    phone: "+359 884 777 595",
-                    email: "office@technomash-bg.com",
-                    workingHours: "Понеделник - Петък: 09:00 - 18:00",
-                  },
-                ]} 
-              />
-            </div>
+          {/* Right Side - Interactive Map (70% width, no right padding) */}
+          <div className="w-full h-[500px] lg:h-[600px]">
+            <InteractiveMap
+              height="100%"
+              minHeight="500px"
+              offices={[
+                {
+                  id: 1,
+                  type: "Technomash",
+                  address: "8900 НОВА ЗАГОРА, П.К. 30",
+                  addressDetails: "ИНДУСТРИАЛНА ЗОНА",
+                  phone: "+359 884 777 595",
+                  email: "office@technomash-bg.com",
+                  workingHours: "Понеделник - Петък: 09:00 - 18:00",
+                },
+              ]}
+            />
           </div>
         </div>
+      </div>
     </div>
   );
 }
