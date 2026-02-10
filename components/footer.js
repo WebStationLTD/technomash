@@ -95,7 +95,7 @@ export default function Footer() {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/technomash-logo.png"
+              src="/technomash-logo.svg"
               alt="Technomash Logo"
               width={345}
               height={80}
