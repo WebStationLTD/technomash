@@ -91,6 +91,22 @@ export default function Navigation() {
         hasDropdown: true,
         isDynamic: true,  // Flag to indicate this menu is loaded dynamically
       },
+      {
+        name: "Оборудване",
+        href: "/equipment",
+        hasDropdown: true,
+        children: [
+          {
+            name: "Оборудване",
+            href: "/equipment",
+          },
+          {
+            name: "Употребявано оборудване",
+            href: "/equipment/used",
+          },
+        ],
+      },
+      { name: "Завършени обекти", href: "/projects" },
       { name: "Екип", href: "/team" },
       { name: "Контакти", href: "/contacts" },
     ],
@@ -155,7 +171,7 @@ export default function Navigation() {
             {/* Left - Contact Info */}
             <div className="flex items-center gap-6 text-white">
               <span>Тел.: 0457 640 16</span>
-              <span>GSM: +359 884 777 595, +359 888 0011 99</span>
+              <span>GSM: +359 888 0011 99</span>
             </div>
 
             {/* Right - Social Icons and Search */}

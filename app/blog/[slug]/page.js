@@ -1,4 +1,5 @@
 import { getPostBySlug } from "../../../services/posts";
+import Image from "next/image";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -75,10 +76,13 @@ export default async function PostPage({ params }) {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <article className="mx-auto max-w-8xl w-full">
               {ogImage && (
-                <img
+                <Image
                   src={ogImage}
                   alt={meta.og_title}
+                  width={1200}
+                  height={630}
                   className="w-full h-auto mb-8 rounded-xl shadow-lg"
+                  priority
                 />
               )}
               <time

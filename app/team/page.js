@@ -1,58 +1,19 @@
 import Image from "next/image";
-import Link from "next/link";
-import { getMembers } from "../../services/members";
 
 export const metadata = {
-  title: "Екип - Technomash",
+  title: "Нашият екип - Technomash",
   description:
-    "Запознайте се с нашия професионален екип от експерти, които работят за успеха на вашите проекти.",
+    "Запознайте се с професионалния екип от експерти на Техномаш БИГ АД, които работят за успеха на вашите проекти.",
 };
 
-export default async function Team() {
-  let members = [];
-  
-  try {
-    members = await getMembers();
-  } catch (error) {
-    console.error("Error fetching team members:", error);
-  }
-
-  // Example team members if none found
-  const exampleMembers = [
-    {
-      id: 1,
-      name: "Иван Петров",
-      position: "Главен изпълнителен директор",
-      description: "Иван Петров е с над 20 години опит в строителната индустрия. Той ръководи екипа ни с видение и страст към иновациите.",
-      profilepicture: "/placeholder.webp",
-      slug: "ivan-petrov",
-    },
-    {
-      id: 2,
-      name: "Мария Георгиева",
-      position: "Технически директор",
-      description: "Мария Георгиева е експерт в областта на производствените процеси и технологичните решения. Тя осигурява високо качество на всички проекти.",
-      profilepicture: "/placeholder.webp",
-      slug: "maria-georgieva",
-    },
-    {
-      id: 3,
-      name: "Петър Стоянов",
-      position: "Директор по продажбите",
-      description: "Петър Стоянов има дългогодишен опит в управлението на клиентски отношения и развитието на бизнеса. Той е ключовата фигура в нашия успех.",
-      profilepicture: "/placeholder.webp",
-      slug: "petar-stoyanov",
-    },
-  ];
-
-  const displayMembers = members.length > 0 ? members : exampleMembers;
-
+export default function Team() {
   return (
     <>
+      {/* Hero Section */}
       <div className="bg-white">
         <div className="mx-auto max-w-10/10 py-0 sm:px-6 sm:py-0 lg:px-0">
           <div className="relative isolate overflow-hidden bg-gray-900 px-6 py-12 text-center shadow-2xl sm:px-12">
-            <div className="mx-auto max-w-2xl text-center">
+            <div className="mx-auto max-w-3xl text-center">
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Нашият екип
               </h1>
@@ -82,84 +43,137 @@ export default async function Team() {
           </div>
         </div>
       </div>
-      <div className="bg-white py-24">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-5">
-          <div className="w-full xl:max-w-2xl xl:col-span-2 order-last xl:order-first">
-            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              За екипа
-            </h2>
-            <p className="mt-6 text-lg/8 text-gray-600">
-              Нашият екип се състои от опитни професионалисти, които споделят обща страст към иновациите и качеството. Работим заедно, за да осигурим най-добрите решения за нашите клиенти.
-            </p>
-            <p className="mt-6 text-lg/8 text-gray-600">
-              Всеки член на екипа принася уникални умения и опит, което прави Technomash лидер в индустрията. Ние вярваме в сътрудничеството, професионализма и постоянния стремеж към усъвършенстване.
-            </p>
-            <p className="mt-6 text-lg/8 text-gray-600">
-              Присъединете се към нас в пътуването към успеха!
-            </p>
+
+      {/* Team Image and Content Section */}
+      <div className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          {/* Team Photo */}
+          <div className="mb-16">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl shadow-2xl">
+              <Image
+                src="/our_team.jpg"
+                alt="Екипът на Техномаш БИГ АД"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                priority
+              />
+            </div>
           </div>
-          <ul role="list" className="divide-y divide-gray-200 xl:col-span-3">
-            {displayMembers.map((member) => (
-              <li
-                key={member.id}
-                className="flex flex-col gap-10 py-12 first:pt-0 last:pb-0 sm:flex-row"
-              >
-                <Link href={`/team/${member.slug}`} prefetch={true}>
-                  <Image
-                    width={250}
-                    height={375}
-                    alt={member.name || "Член на екипа"}
-                    src={member.profilepicture || "/placeholder.webp"}
-                    className="rounded-2xl object-cover"
-                  />
-                </Link>
-                <div className="max-w-xl flex-auto">
-                  <Link href={`/team/${member.slug}`} prefetch={true}>
-                    <h3 className="text-lg/8 font-semibold tracking-tight text-gray-900">
-                      {member.name || "Член на екипа"}
-                    </h3>
-                    <p className="text-base/7 text-gray-600">
-                      {member.position || ""}
-                    </p>
-                    <div
-                      className="mt-6 text-base/7 text-gray-600 prose"
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          member.description && member.description.length > 100
-                            ? `${member.description.slice(0, 200)}...`
-                            : member.description || "",
-                      }}
-                    />
-                  </Link>
-                  {member.linkedin && member.linkedin.url && (
-                    <ul role="list" className="mt-6 flex gap-x-6">
-                      <li>
-                        <Link
-                          href={member.linkedin.url}
-                          target={member.linkedin.target || "_blank"}
-                          className="text-gray-400 hover:text-gray-500"
-                        >
-                          <span className="sr-only">LinkedIn</span>
-                          <svg
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            aria-hidden="true"
-                            className="size-5"
-                          >
-                            <path
-                              d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
-                              clipRule="evenodd"
-                              fillRule="evenodd"
-                            />
-                          </svg>
-                        </Link>
-                      </li>
-                    </ul>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+
+          {/* Company Story - Two Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6">
+                Нашата история
+              </h2>
+              <div className="prose prose-lg text-gray-600 space-y-4">
+                <p>
+                  След повече от 15 години опит ние сме водещи в нашата област и развиваме 
+                  способностите си, за да отговорим веднага и напълно на пазарните изисквания 
+                  с обширни познания върху технологичните потребности, предлагайки пълни решения, 
+                  които са доказани ценни инвестиции.
+                </p>
+                <p>
+                  &ldquo;Техномаш&rdquo; от своето създаване и до днешни дни расте положително нагоре. 
+                  По-специално в последните пет години, когато компанията ни се трансформира 
+                  от комерсиална до индустриална и вече е единственият производител в България 
+                  на бетонови възли, асфалтови бази, пресевни и промивни инсталации.
+                </p>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6">
+                Нашите ценности
+              </h2>
+              <div className="prose prose-lg text-gray-600 space-y-4">
+                <p>
+                  Финансовите ни възможности значително се подобриха и доказват нашата финансова 
+                  стабилност и кредитна дееспособност. С твърдата увереност в нашите възможности 
+                  ние се чувстваме горди със своето минало и оптимисти за своето бъдеще.
+                </p>
+                <p>
+                  &ldquo;Техномаш&rdquo; АД е една бързо развиваща се, динамична и гъвкава компания. Нашият 
+                  успех няма тайни. Той се дължи на стремежа ни да произвеждаме изключително 
+                  качество при безопасни условия на труд и експлоатация – винаги в услуга на 
+                  партньорите си.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Content */}
+          <div className="bg-gray-50 rounded-2xl p-8 lg:p-12">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6 text-center">
+                Нашата философия
+              </h2>
+              <div className="prose prose-lg text-gray-600 space-y-4">
+                <p>
+                  Нашите специалисти са на разположение 24 часа всеки ден, във всяка една точка 
+                  на страната. Независимо колко добри са нашите продукти, услуги, технологии и 
+                  изпълнение, ние вярваме, че те могат да станат и по-добри.
+                </p>
+                <p className="text-center font-medium text-gray-900 text-xl">
+                  Затова се стремим постоянно към съвършенство и във всичко, което правим, 
+                  сме отворени за нови идеи и не се страхуваме да поемаме рискове.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Section */}
+      <div className="bg-gray-900 py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-5xl font-bold text-white mb-2">15+</div>
+              <div className="text-lg text-gray-300">Години опит</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold text-white mb-2">200+</div>
+              <div className="text-lg text-gray-300">Завършени проекта</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold text-white mb-2">24/7</div>
+              <div className="text-lg text-gray-300">Техническа поддръжка</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="bg-white py-16">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-6">
+            Искате да работите с нас?
+          </h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Нашият екип е готов да ви консултира и помогне при реализацията на вашия проект. 
+            Свържете се с нас днес!
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contacts"
+              className="inline-flex items-center justify-center gap-2 bg-[#ff2e4a] hover:bg-[#b82220] text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
+            >
+              Свържете се с нас
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a
+              href="/projects"
+              className="inline-flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-3.5 rounded-md text-base font-semibold transition-colors"
+            >
+              Разгледайте проектите ни
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </>

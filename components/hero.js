@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import LazyImageObserver from "./LazyImageObserver";
 
 export default function Hero() {
@@ -11,15 +12,13 @@ export default function Hero() {
         <div className="lg:hidden">
           <div className="relative">
             {/* Background Image */}
-            <img
+            <Image
               src="/hero-image-mobile.jpg"
               width={640}
               height={400}
               alt="Hero image"
               className="w-full h-[420px] object-cover"
-              loading="eager"
-              decoding="sync"
-              fetchPriority="high"
+              priority
               style={{
                 objectFit: "cover",
                 contentVisibility: "auto",
@@ -53,15 +52,13 @@ export default function Hero() {
         <div className="hidden lg:block relative min-h-[600px]">
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
-            <img
+            <Image
               src="/hero-image-desktop.jpg"
               width={1920}
               height={776}
               alt="Modern architecture building"
               className="w-full h-full object-cover"
-              loading="eager"
-              decoding="sync"
-              fetchPriority="high"
+              priority
               style={{
                 objectFit: "cover",
                 contentVisibility: "auto",
@@ -165,7 +162,7 @@ export default function Hero() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение „До Ключ"</h3>
+                  <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение &bdquo;До Ключ&ldquo;</h3>
                   <p className="text-sm text-gray-600 text-center leading-relaxed">
                     Професионално изграждане и пускане в експлоатация от опитни екипи, гарантиращи безкомпромисно качество на финалната инсталация.
                   </p>
@@ -234,7 +231,7 @@ export default function Hero() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение „До Ключ"</h3>
+              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">Изпълнение &bdquo;До Ключ&ldquo;</h3>
               <p className="text-sm text-gray-600 text-center leading-relaxed">
                 Професионално изграждане и пускане в експлоатация от опитни екипи, гарантиращи безкомпромисно качество на финалната инсталация.
               </p>

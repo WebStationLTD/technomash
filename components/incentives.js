@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getNavigationMenu } from "../services/navigation";
 
@@ -92,10 +93,13 @@ export default function Incentives() {
 
             {/* Right Side - Image with decorative dot */}
             <div className="relative">
-              <img
+              <Image
                 alt="Modern building architecture"
                 src="/hero-image-desktop.jpg"
+                width={800}
+                height={600}
                 className="w-full h-auto rounded-lg object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               {/* Decorative red dot */}
               <div className="absolute bottom-8 right-8 w-4 h-4 bg-[#ff2e4a] rounded-full"></div>
@@ -111,10 +115,12 @@ export default function Incentives() {
             {/* Service Card 1 - Renewable Energy */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
-                <img
+                <Image
                   src="/hero-image-mobile.jpg"
                   alt="Holiday Extras"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
@@ -147,10 +153,12 @@ export default function Incentives() {
             {/* Service Card 2 - Energy Infrastructure */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
-                <img
+                <Image
                   src="/menu-hero-image.jpg"
                   alt="Jumpsuits & Boiler Suits"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">
@@ -183,10 +191,12 @@ export default function Incentives() {
             {/* Service Card 3 - Infrastructure & Construction */}
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
-                <img
+                <Image
                   src="/hero-image-desktop.jpg"
                   alt="Summer Tops"
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-6">

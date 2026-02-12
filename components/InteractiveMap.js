@@ -219,9 +219,6 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
   useEffect(() => {
     if (!map || !offices.length) return;
 
-    // Изчистваме стари маркери
-    markers.forEach((marker) => marker.setMap(null));
-
     const newMarkers = [];
     const bounds = new window.google.maps.LatLngBounds();
 
@@ -273,7 +270,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
       // Отваряне на info window при клик
       marker.addListener("click", () => {
         // Затваряме всички останали info windows
-        markers.forEach((m) => m.infoWindow && m.infoWindow.close());
+        newMarkers.forEach((m) => m.infoWindow && m.infoWindow.close());
         infoWindow.open(map, marker);
       });
 
@@ -297,7 +294,7 @@ const InteractiveMap = ({ offices = [], height = "70vh", minHeight = "500px" }) 
 
     setMarkers(newMarkers);
 
-    // Cleanup
+    // Cleanup on unmount and when dependencies change
     return () => {
       newMarkers.forEach((marker) => marker.setMap(null));
     };

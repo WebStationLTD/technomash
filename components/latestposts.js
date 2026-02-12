@@ -116,10 +116,12 @@ export default function LatestPosts() {
                         <div key={post.id} className="flex-shrink-0 w-full">
                           <Link href={`/blog/${post.slug}`} prefetch={true}>
                             <div className="relative h-80 overflow-hidden group cursor-pointer">
-                              <img
+                              <Image
                                 src={getImageUrl()}
                                 alt={post.title.rendered}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                sizes="100vw"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                               <div className="absolute bottom-6 left-6 right-6">

@@ -14,7 +14,7 @@ const navigation = {
     { name: "Контакти", href: "/contacts" },
   ],
   contact: [
-    { name: "+359 884 777 595", href: "tel:+359884777595" },
+    { name: "+359 888 0011 99", href: "tel:+359888001199" },
     {
       name: "office@technomash-bg.com",
       href: "mailto:office@technomash-bg.com",

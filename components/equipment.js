@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 // Equipment section on the home page
 export default function Equipment() {
@@ -50,10 +51,13 @@ export default function Equipment() {
 
           {/* Right Side - Image with decorative dot */}
           <div className="relative">
-            <img
+            <Image
               alt="Industrial equipment"
               src="/hero-image-desktop.jpg"
+              width={800}
+              height={600}
               className="w-full h-auto rounded-lg object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             {/* Decorative red dot */}
             <div className="absolute bottom-8 right-8 w-4 h-4 bg-[#ff2e4a] rounded-full" />
