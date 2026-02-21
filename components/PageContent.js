@@ -58,7 +58,7 @@ export default function PageContent({ content }) {
     <article className="mx-auto max-w-8xl w-full">
       <div
         id="page-content"
-        className={`wordpress-content prose max-w-none leading-relaxed ${
+        className={`wordpress-content ${
           isVisible ? "opacity-100" : "opacity-0"
         } transition-opacity duration-300`}
         dangerouslySetInnerHTML={{

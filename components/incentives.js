@@ -48,7 +48,7 @@ export default function Incentives() {
             {/* Left Side - Text Content */}
             <div className="space-y-6">
               <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                За нас
+                Добре дошли в
               </p>
               <h2 className="text-4xl font-bold tracking-tight text-gray-900">
                 ТЕХНОМАШ БИГ АД

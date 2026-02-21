@@ -80,6 +80,16 @@ export default function RootLayout({ children }) {
         />
         <link rel="dns-prefetch" href="https://technomash.admin-panels.com" />
 
+        {/* WordPress Gutenberg block library CSS — loaded as <link> to bypass Turbopack build-time CSS processing which drops external @import url() */}
+        <link
+          rel="stylesheet"
+          href="https://technomash.admin-panels.com/wp-includes/css/dist/block-library/style.min.css"
+        />
+        <link
+          rel="stylesheet"
+          href="https://technomash.admin-panels.com/wp-includes/css/dist/block-library/theme.min.css"
+        />
+
         {/* Директно използване на preload тагове с правилния синтаксис */}
         <link
           rel="preload"
