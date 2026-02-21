@@ -90,6 +90,26 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// Subtitle mapping keyed by lowercase title fragment
+const serviceSubtitleMap = {
+  "фотоволтаични централи":       "Проектиране и изграждане на мащабни соларни паркове.",
+  "вятърни паркове":              "Монтаж на вятърни турбини и специфична инфраструктура.",
+  "системи за съхранение":        "Монтаж на малки и индустриални батерийни комплекси (BESS) за оптимизиране на потреблението.",
+  "сервиз и поддръжка":           "Технически мониторинг и поддръжка на енергийни обекти.",
+  "подстанции":                   "Изграждане и модернизация на критични енергийни съоръжения.",
+  "кабелни трасета":              "Професионално изграждане на линии за ниско, средно и високо напрежение.",
+  "енергиен мениджмънт":          "Свързване към националната мрежа и управление на преноса.",
+  "пътна инфраструктура":         "Пътища и транспортни комуникации за индустрията.",
+  "вик системи":                  "Индустриално водоснабдяване и канализация.",
+  "тежко машиностроене":          "Изработка и монтаж на стоманени конструкции и специализирано оборудване.",
+};
+
+function getServiceSubtitle(titleHtml = "") {
+  const lower = titleHtml.replace(/<[^>]+>/g, "").toLowerCase();
+  const key = Object.keys(serviceSubtitleMap).find((k) => lower.includes(k));
+  return key ? serviceSubtitleMap[key] : null;
+}
+
 export default async function ServicePage({ params }) {
   try {
     const { slug } = await params;
@@ -159,6 +179,24 @@ export default async function ServicePage({ params }) {
               <h1 className="text-4xl font-semibold tracking-tight text-balance text-white sm:text-5xl">
                 {page.title?.rendered || "Услуга"}
               </h1>
+              {(() => {
+                const subtitle = getServiceSubtitle(page.title?.rendered);
+                return subtitle ? (
+                  <div className="mt-5 flex flex-col items-center gap-3">
+                    <div className="flex items-center justify-center gap-0 w-48">
+                      <span className="block h-px flex-1 bg-gradient-to-r from-transparent via-red-500/60 to-red-500" />
+                      <span className="block h-[3px] w-10 bg-red-500 rounded-full" />
+                      <span className="block h-px flex-1 bg-gradient-to-l from-transparent via-red-500/60 to-red-500" />
+                    </div>
+                    <p
+                      className="max-w-2xl text-base sm:text-lg italic font-light tracking-wide"
+                      style={{ color: "rgba(255,255,255,0.72)", fontStyle: "italic", letterSpacing: "0.03em" }}
+                    >
+                      {subtitle}
+                    </p>
+                  </div>
+                ) : null;
+              })()}
               <svg
                 viewBox="0 0 1024 1024"
                 aria-hidden="true"

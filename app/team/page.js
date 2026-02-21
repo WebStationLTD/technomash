@@ -1,9 +1,9 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: "Нашият екип - Technomash",
+  title: "Екип - Техномаш Българска Индустриална Група",
   description:
-    "Запознайте се с професионалния екип от експерти на Техномаш БИГ АД, които работят за успеха на вашите проекти.",
+    "Екипът на Техномаш БИГ АД — доказани инженери и технически специалисти с опит в изграждането на над 50 индустриални обекта и енергийни мощности над 200 MW.",
 };
 
 export default function Team() {
@@ -17,8 +17,17 @@ export default function Team() {
               <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Нашият екип
               </h1>
-              <p className="mt-6 text-lg/8 text-white">
-                Запознайте се с професионалния екип от експерти, които работят за успеха на вашите проекти.
+              {/* Decorative divider */}
+              <div className="mt-5 flex items-center justify-center gap-0 w-48 mx-auto">
+                <span className="block h-px flex-1 bg-gradient-to-r from-transparent via-red-500/60 to-red-500" />
+                <span className="block h-[3px] w-10 bg-red-500 rounded-full" />
+                <span className="block h-px flex-1 bg-gradient-to-l from-transparent via-red-500/60 to-red-500" />
+              </div>
+              <p
+                className="mt-4 text-base sm:text-lg font-light tracking-wide"
+                style={{ color: "rgba(255,255,255,0.72)", fontStyle: "italic" }}
+              >
+                Инженерна експертиза, изградена върху опит
               </p>
             </div>
             <svg
@@ -30,11 +39,11 @@ export default function Team() {
                 r={512}
                 cx={512}
                 cy={512}
-                fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+                fill="url(#team-gradient)"
                 fillOpacity="0.7"
               />
               <defs>
-                <radialGradient id="827591b1-ce8c-4110-b064-7cb85a0b1217">
+                <radialGradient id="team-gradient">
                   <stop stopColor="#ff2e4a" />
                   <stop offset={1} stopColor="#ff2e4a" />
                 </radialGradient>
@@ -44,81 +53,62 @@ export default function Team() {
         </div>
       </div>
 
-      {/* Team Image and Content Section */}
-      <div className="bg-white py-16">
+      {/* Team Photo — intentionally short/banner-style to avoid blur */}
+      <div className="bg-white pt-14">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          {/* Team Photo */}
-          <div className="mb-16">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl shadow-2xl">
-              <Image
-                src="/our_team.jpg"
-                alt="Екипът на Техномаш БИГ АД"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1280px) 100vw, 1280px"
-                priority
-              />
-            </div>
+          <div className="relative h-52 sm:h-64 overflow-hidden rounded-2xl shadow-xl">
+            <Image
+              src="/our_team.jpg"
+              alt="Екипът на Техномаш БИГ АД"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              priority
+            />
+            {/* subtle bottom fade so it blends into the white section */}
+            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/30 to-transparent" />
           </div>
+        </div>
+      </div>
 
-          {/* Company Story - Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-            <div>
-              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6">
-                Нашата история
-              </h2>
-              <div className="prose prose-lg text-gray-600 space-y-4">
-                <p>
-                  След повече от 15 години опит ние сме водещи в нашата област и развиваме 
-                  способностите си, за да отговорим веднага и напълно на пазарните изисквания 
-                  с обширни познания върху технологичните потребности, предлагайки пълни решения, 
-                  които са доказани ценни инвестиции.
-                </p>
-                <p>
-                  &ldquo;Техномаш&rdquo; от своето създаване и до днешни дни расте положително нагоре. 
-                  По-специално в последните пет години, когато компанията ни се трансформира 
-                  от комерсиална до индустриална и вече е единственият производител в България 
-                  на бетонови възли, асфалтови бази, пресевни и промивни инсталации.
-                </p>
-              </div>
-            </div>
-            <div>
-              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6">
-                Нашите ценности
-              </h2>
-              <div className="prose prose-lg text-gray-600 space-y-4">
-                <p>
-                  Финансовите ни възможности значително се подобриха и доказват нашата финансова 
-                  стабилност и кредитна дееспособност. С твърдата увереност в нашите възможности 
-                  ние се чувстваме горди със своето минало и оптимисти за своето бъдеще.
-                </p>
-                <p>
-                  &ldquo;Техномаш&rdquo; АД е една бързо развиваща се, динамична и гъвкава компания. Нашият 
-                  успех няма тайни. Той се дължи на стремежа ни да произвеждаме изключително 
-                  качество при безопасни условия на труд и експлоатация – винаги в услуга на 
-                  партньорите си.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Main Content */}
+      <div className="bg-white py-14">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-          {/* Additional Content */}
-          <div className="bg-gray-50 rounded-2xl p-8 lg:p-12">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 mb-6 text-center">
-                Нашата философия
-              </h2>
-              <div className="prose prose-lg text-gray-600 space-y-4">
-                <p>
-                  Нашите специалисти са на разположение 24 часа всеки ден, във всяка една точка 
-                  на страната. Независимо колко добри са нашите продукти, услуги, технологии и 
-                  изпълнение, ние вярваме, че те могат да станат и по-добри.
-                </p>
-                <p className="text-center font-medium text-gray-900 text-xl">
-                  Затова се стремим постоянно към съвършенство и във всичко, което правим, 
-                  сме отворени за нови идеи и не се страхуваме да поемаме рискове.
-                </p>
+          {/* Intro paragraph — full width, prominent */}
+          <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-14">
+            Екипът на „Техномаш – Българска Индустриална Група" е двигателят зад нашия успех.
+            С корени в тежкото машиностроене и строителството, нашите специалисти притежават
+            дълбоки технически познания, които успешно прилагат в сектора на възобновяемата енергия.
+          </p>
+
+          {/* Two-column detail blocks */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-14">
+            {/* Left block */}
+            <div className="bg-gray-50 rounded-2xl p-8 flex flex-col gap-4">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="inline-block w-1 h-8 rounded-full bg-[#ff2e4a]" />
+                <h2 className="text-xl font-semibold text-gray-900">Доказани решения</h2>
               </div>
+              <p className="text-gray-600 leading-relaxed">
+                Разполагаме с екип от доказани професионалисти, които не просто изпълняват
+                проекти, а намират решения в необичайни и сложни ситуации. Нашият опит обхваща
+                реализацията на над 50 индустриални обекта в страната и чужбина, както и
+                изграждането на енергийни мощности с общ капацитет от над 200 MW.
+              </p>
+            </div>
+
+            {/* Right block */}
+            <div className="bg-gray-50 rounded-2xl p-8 flex flex-col gap-4">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="inline-block w-1 h-8 rounded-full bg-[#ff2e4a]" />
+                <h2 className="text-xl font-semibold text-gray-900">Пълен синхрон</h2>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                От прецизното проектиране и логистиката до монтажа и въвеждането в
+                експлоатация — нашите инженери и технически екипи работят в пълен синхрон,
+                за да гарантират качество без компромис.
+              </p>
             </div>
           </div>
         </div>
@@ -129,16 +119,16 @@ export default function Team() {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div>
+              <div className="text-5xl font-bold text-white mb-2">50+</div>
+              <div className="text-lg text-gray-300">Индустриални обекта</div>
+            </div>
+            <div>
+              <div className="text-5xl font-bold text-white mb-2">200 MW</div>
+              <div className="text-lg text-gray-300">Изградени енергийни мощности</div>
+            </div>
+            <div>
               <div className="text-5xl font-bold text-white mb-2">15+</div>
               <div className="text-lg text-gray-300">Години опит</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold text-white mb-2">200+</div>
-              <div className="text-lg text-gray-300">Завършени проекта</div>
-            </div>
-            <div>
-              <div className="text-5xl font-bold text-white mb-2">24/7</div>
-              <div className="text-lg text-gray-300">Техническа поддръжка</div>
             </div>
           </div>
         </div>
@@ -151,7 +141,7 @@ export default function Team() {
             Искате да работите с нас?
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Нашият екип е готов да ви консултира и помогне при реализацията на вашия проект. 
+            Нашият екип е готов да ви консултира и помогне при реализацията на вашия проект.
             Свържете се с нас днес!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
