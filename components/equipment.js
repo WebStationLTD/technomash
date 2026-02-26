@@ -53,7 +53,7 @@ export default function Equipment() {
           <div className="relative">
             <Image
               alt="Industrial equipment"
-              src="/hero-image-desktop.jpg"
+              src="/оборудване.jpg"
               width={800}
               height={600}
               className="w-full h-auto rounded-lg object-cover"

@@ -95,7 +95,7 @@ export default function Incentives() {
             <div className="relative">
               <Image
                 alt="Modern building architecture"
-                src="/hero-image-desktop.jpg"
+                src="/Добре-дошли-в-ТЕХНОМАШ-БИГ-АД.jpg"
                 width={800}
                 height={600}
                 className="w-full h-auto rounded-lg object-cover"
@@ -116,7 +116,7 @@ export default function Incentives() {
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
                 <Image
-                  src="/hero-image-mobile.jpg"
+                  src="/възобновяема-енергия.jpg"
                   alt="Holiday Extras"
                   fill
                   className="object-cover"
@@ -154,7 +154,7 @@ export default function Incentives() {
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
                 <Image
-                  src="/menu-hero-image.jpg"
+                  src="/Енергийна-инфраструктура.jpg"
                   alt="Jumpsuits & Boiler Suits"
                   fill
                   className="object-cover"
@@ -192,7 +192,7 @@ export default function Incentives() {
             <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow group">
               <div className="relative h-96">
                 <Image
-                  src="/hero-image-desktop.jpg"
+                  src="/Инфраструктура-и-строителство.jpg"
                   alt="Summer Tops"
                   fill
                   className="object-cover"

@@ -13,7 +13,7 @@ export default function Hero() {
           <div className="relative">
             {/* Background Image */}
             <Image
-              src="/hero-image-mobile.jpg"
+              src="/hero-image-technomash.jpg"
               width={640}
               height={400}
               alt="Hero image"
@@ -53,7 +53,7 @@ export default function Hero() {
           {/* Background Image */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/hero-image-desktop.jpg"
+              src="/hero-image-technomash.jpg"
               width={1920}
               height={776}
               alt="Modern architecture building"
