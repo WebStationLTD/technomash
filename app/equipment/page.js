@@ -80,6 +80,62 @@ const equipmentCategories = [
       "Отдалечен достъп",
     ],
   },
+  {
+    id: 7,
+    title: "Huawei SUN2000-10KTL-M1",
+    description: "Инверторът Huawei SUN2000-10KTL-M1 е трифазен мрежов инвертор с номинална мощност от 10 kW, предназначен за ефективно преобразуване на слънчевата енергия в електрическа. Той разполага с два MPPT тракера, които позволяват оптимално проследяване на точката на максимална мощност, осигурявайки по-висока ефективност при различни условия на осветеност.",
+    images: [
+      "/huawei-sun2000-10ktl-1.jpg",
+      "/huawei-sun2000-10ktl-2.jpg",
+      "/huawei-sun2000-10ktl-3.jpg",
+    ],
+    features: [
+      "Максимално входно напрежение: 1100 V",
+      "Работен MPPT диапазон: 160-1000 V",
+      "Максимална входна мощност: 15 kW",
+      "Максимална ефективност: 98,6%",
+      "Степен на защита: IP65",
+      "Активна защита от електрическа дъга (AFCI)",
+      "Работен температурен диапазон: -25°C до +60°C",
+      "Вграден онлайн мониторинг през Fusion Solar",
+    ],
+  },
+  {
+    id: 8,
+    title: "Захранващ модул батерия Huawei LUNA2000 S0-C0",
+    description: "Захранващият модул LUNA2000 S0-C0 е ключов компонент в системата за съхранение на енергия на Huawei. Той управлява зареждането и разреждането на батерийните модули, осигурявайки ефективност и безопасност. Модулът е съвместим с различни инвертори, което го прави подходящ за разнообразни приложения.",
+    images: [
+      "/luna2000-power-module.jpg",
+    ],
+    features: [
+      "Модулен дизайн за лесно разширяване",
+      "Съвместим с еднофазни и трифазни инвертори",
+      "Лесен монтаж и бързо пускане в експлоатация",
+      "Автоматично разпознаване в приложението",
+      "Висока безопасност и надеждност",
+      "100% дълбочина на разреждане (DoD)",
+      "Интегриран енергиен оптимизатор",
+    ],
+  },
+  {
+    id: 9,
+    title: "Литиево Йонна батерия за LUNA2000 5kWh – S0-E0",
+    description: "Литиево-йонният батериен модул LUNA2000-5-E0 е част от модулната система за съхранение на енергия на Huawei. С капацитет от 5 kWh, този модул е предназначен за разширяване на съществуващи LUNA2000 системи, осигурявайки гъвкавост и мащабируемост според енергийните нужди.",
+    images: [
+      "/luna2000-battery-module-1.jpg",
+      "/luna2000-battery-module-2.jpg",
+    ],
+    features: [
+      "Капацитет: 5 kWh на модул",
+      "Разширяване до 15 kWh общо",
+      "Литиево-железо-фосфатни (LFP) клетки",
+      "Безопасност и дълъг жизнен цикъл",
+      "Съвместимост с различни инвертори",
+      "Лесен монтаж и интеграция",
+      "Автоматично разпознаване",
+      "Модулен дизайн",
+    ],
+  },
 ];
 
 export default function EquipmentPage() {
@@ -179,15 +235,31 @@ export default function EquipmentPage() {
                 } gap-8 lg:gap-12 items-center`}
               >
                 <div className="lg:w-1/2">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg">
-                    <Image
-                      src={category.image}
-                      alt={category.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                  </div>
+                  {category.images && category.images.length > 0 ? (
+                    <div className={`grid gap-4 ${category.images.length === 1 ? 'grid-cols-1' : category.images.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'}`}>
+                      {category.images.map((image, imgIdx) => (
+                        <div key={imgIdx} className="relative aspect-square overflow-hidden rounded-xl shadow-lg group">
+                          <Image
+                            src={image}
+                            alt={`${category.title} - снимка ${imgIdx + 1}`}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg">
+                      <Image
+                        src={category.image}
+                        alt={category.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="lg:w-1/2">
                   <h3 className="text-3xl font-semibold text-gray-900 mb-4">
