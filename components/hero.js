@@ -91,14 +91,7 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Right Side - Video Play Button */}
-              <div className="relative flex items-center justify-center h-full">
-                <button className="w-20 h-20 bg-[#ff2e4a] rounded-full flex items-center justify-center shadow-2xl hover:bg-[#b82220] transition-colors group">
-                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </button>
-              </div>
+              
             </div>
           </div>
         </div>
